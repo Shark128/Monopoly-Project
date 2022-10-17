@@ -4,13 +4,11 @@ public class BoardSpace {
     public Player owner;
     public int color;
     public int buildType;
-    public boolean inJail;
     public BoardSpace (int purchasePrice, int[] rentCost, int color, int buildType) {
         this.purchasePrice = purchasePrice;
         this.rentCost = rentCost;
         owner = null;
         this.color = color;
         this.buildType = buildType;
-        inJail = false;
     }
 }
