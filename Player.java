@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 public class Player {
     public int balance;
     public ArrayList<BoardSpace> properties;
