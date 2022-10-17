@@ -1,4 +1,6 @@
 public class Link {
-  // TEst
+    public int purchasePrice;
+    public int rentCost;
+    public Player owner;
 
 }
