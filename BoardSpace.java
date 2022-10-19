@@ -4,6 +4,7 @@ public class BoardSpace {
     public Player owner;
     public int color;
     public int buildType;
+
     public BoardSpace (int purchasePrice, int[] rentCost, int color, int buildType) {
         this.purchasePrice = purchasePrice;
         this.rentCost = rentCost;
@@ -11,4 +12,5 @@ public class BoardSpace {
         this.color = color;
         this.buildType = buildType;
     }
+
 }
