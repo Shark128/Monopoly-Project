@@ -12,5 +12,4 @@ public class BoardSpace {
         this.color = color;
         this.buildType = buildType;
     }
-
 }
