@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.ArrayList;
 public class Player {
     public int balance;
     public ArrayList<BoardSpace> properties;
@@ -11,5 +11,4 @@ public class Player {
         this.icon =  icon;
         inJail = false;
     }
-
 }
