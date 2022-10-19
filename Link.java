@@ -4,4 +4,5 @@ public class Link<D> {
     public Link (D data) {
         this.data = data;
     }
+
 }
