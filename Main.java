@@ -118,11 +118,23 @@ public class Main {
         board.insertFirst(linkRea); board.insertFirst(linkInc); board.insertFirst(linkBal); board.insertFirst(linkCom);
         board.insertFirst(linkMed); board.insertFirst(linkGo);
 
-        ChanceChest Advance_To_Go = new ChanceChest(0,200,1, "GO");
-        ChanceChest Bank_Error = new ChanceChest(0,200,0, null);
-        ChanceChest Doctor_Fee = new ChanceChest(0,-50,0, null);
-        ChanceChest Sale_Of_Stock = new ChanceChest(0,50,0, null);
-        ChanceChest Get_Out_Of_Jail_Card = new ChanceChest(0,0,2, null);
-        ChanceChest Go_To_Jail_Card = new ChanceChest(0,0, 2, null);
+        //Bryan
+        //ChanceChest Advance_To_Go = new ChanceChest(0,200,1, "GO");
+        ChanceChest Bank_Error = new ChanceChest("Bank Error",0,200,0, null);
+        ChanceChest Doctor_Fee = new ChanceChest("Doctor Fee",0,-50,0, null);
+        ChanceChest Sale_Of_Stock = new ChanceChest("Sale Of Stock ",0,50,0, null);
+        //ChanceChest Get_Out_Of_Jail_Card = new ChanceChest("Get Out Of Jail Card",0,0,2, null);
+        //ChanceChest Go_To_Jail_Card = new ChanceChest("Go_To_Jail_Card", 0,0, 1, "Jail");
+        ChanceChest Holiday_Fund = new ChanceChest("Holiday Fund",0,100,0,null);
+        ChanceChest Income_Tax_Refund = new ChanceChest("Income Tax Refund",0,20,0,null);
+        //ChanceChest Birthday = new ChanceChest("Birthday",0,10,0,null);
+        ChanceChest Life_Insurance = new ChanceChest("Life Insurance",0,100,0,null);
+        ChanceChest Hospital_Fees = new ChanceChest("Hospital Fees",0,-100,0,null);
+        ChanceChest School_Fees = new ChanceChest("School Fees", 0,-50,0,null);
+        ChanceChest Consultancy = new ChanceChest("Consultancy",0,-100,0,null);
+        //ChanceChest Street_Repair = new ChanceChest("Street_Repair",0,40,0,null);
+        ChanceChest Beauty_Contest = new ChanceChest("Beauty_Contest",0,10,0,null);
+        ChanceChest Inheritance = new ChanceChest("Inheritance",0,100,0,null);
+
     }
 }
