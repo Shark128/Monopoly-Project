@@ -2,6 +2,7 @@ public class Main {
     public static void main(String[] args) {
         // Written by Shreyes
         CircularLinkedList board = new CircularLinkedList();
+        Dice gameDie = new Dice();
         // Written by Carson
         BoardSpace GO = new BoardSpace(0, new int[]{0,0,0,0,0,0},
                 0, 0);
@@ -31,7 +32,9 @@ public class Main {
         BoardSpace St_Charles_Place = new BoardSpace(140, new int[]{10, 50, 150, 450, 625, 750},
                 3,1);
         Link<BoardSpace> linkStc = new Link<BoardSpace>(St_Charles_Place);
-        // BoardSpace Electric_Company = new BoardSpace(150, new int[4 * diceValue, 10 * diceValue], 0,3);
+        BoardSpace Electric_Company = new BoardSpace(150, new int[]{4 * gameDie.totalDiceValue, 10 * gameDie.totalDiceValue},
+                0,3);
+        Link<BoardSpace> linkEle = new Link<BoardSpace>(Electric_Company);
         BoardSpace States_Avenue = new BoardSpace(140, new int[]{10, 50, 150, 450, 625, 750},
                 3,1);
         Link<BoardSpace> linkSta = new Link<BoardSpace>(States_Avenue);
@@ -41,7 +44,6 @@ public class Main {
         BoardSpace Pennsylvania_Railroad = new BoardSpace(200,new int[]{25, 50, 100, 200},
                 0, 2 );
         Link<BoardSpace> linkPen = new Link<BoardSpace>(Pennsylvania_Railroad);
-        // Add Orange Spaces
         BoardSpace St_James_Place = new BoardSpace(180, new int[]{14, 70, 200, 550, 750, 950},
                 4, 1);
         Link<BoardSpace> linkStj = new Link<BoardSpace>(St_James_Place);
@@ -71,7 +73,9 @@ public class Main {
         BoardSpace Ventinor_Avenue = new BoardSpace(260, new int[]{22, 110, 330, 800, 975, 1150},
                 6, 1);
         Link<BoardSpace> linkVen = new Link<BoardSpace>(Ventinor_Avenue);
-        // BoardSpace Water_Works = new BoardSpace(150, new int[]{},0, 3);
+        BoardSpace Water_Works = new BoardSpace(150, new int[]{4 * gameDie.totalDiceValue, 10 * gameDie.totalDiceValue},
+                0, 3);
+        Link<BoardSpace> linkWat = new Link<BoardSpace>(Water_Works);
         BoardSpace Marvin_Gardens = new BoardSpace(280, new int[]{24, 120, 360, 850, 1025, 1200},
                 6, 1);
         Link<BoardSpace> linkMar = new Link<BoardSpace>(Marvin_Gardens);
@@ -108,11 +112,11 @@ public class Main {
         // Written by Shreyes, adding all spaces into the cll board (backwards)
         board.insertFirst(linkBoa); board.insertFirst(linkLux); board.insertFirst(linkPar); board.insertFirst(linkCha);
         board.insertFirst(linkSho); board.insertFirst(linkPe); board.insertFirst(linkCom); board.insertFirst(linkNor);
-        board.insertFirst(linkPac); board.insertFirst(linkGot); board.insertFirst(linkMar); // board.insertFirst(linkWat);
+        board.insertFirst(linkPac); board.insertFirst(linkGot); board.insertFirst(linkMar); board.insertFirst(linkWat);
         board.insertFirst(linkVen); board.insertFirst(linkAtl); board.insertFirst(linkBor); board.insertFirst(linkIll);
         board.insertFirst(linkInd); board.insertFirst(linkCha); board.insertFirst(linkKen); // board.insertFirst(linkFre);
         board.insertFirst(linkNew); board.insertFirst(linkTen); board.insertFirst(linkCom); board.insertFirst(linkStj);
-        board.insertFirst(linkPen); board.insertFirst(linkVir); board.insertFirst(linkSta); // board.insertFirst(linkEle);
+        board.insertFirst(linkPen); board.insertFirst(linkVir); board.insertFirst(linkSta); board.insertFirst(linkEle);
         board.insertFirst(linkStc); // board.insertFirst(linkJus);
         board.insertFirst(linkCon); board.insertFirst(linkVer); board.insertFirst(linkCha); board.insertFirst(linkOri);
         board.insertFirst(linkRea); board.insertFirst(linkInc); board.insertFirst(linkBal); board.insertFirst(linkCom);
