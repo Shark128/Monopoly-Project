@@ -117,5 +117,12 @@ public class Main {
         board.insertFirst(linkCon); board.insertFirst(linkVer); board.insertFirst(linkCha); board.insertFirst(linkOri);
         board.insertFirst(linkRea); board.insertFirst(linkInc); board.insertFirst(linkBal); board.insertFirst(linkCom);
         board.insertFirst(linkMed); board.insertFirst(linkGo);
+
+        ChanceChest Advance_To_Go = new ChanceChest(0,200,1, "GO");
+        ChanceChest Bank_Error = new ChanceChest(0,200,0, null);
+        ChanceChest Doctor_Fee = new ChanceChest(0,-50,0, null);
+        ChanceChest Sale_Of_Stock = new ChanceChest(0,50,0, null);
+        ChanceChest Get_Out_Of_Jail_Card = new ChanceChest(0,0,2, null);
+        ChanceChest Go_To_Jail_Card = new ChanceChest(0,0, 2, null);
     }
 }
