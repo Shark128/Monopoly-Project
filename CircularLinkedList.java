@@ -8,10 +8,7 @@ public class CircularLinkedList { // Written by Carson, Shreyes, and Bryan
     }
     //Inserts a new link at the start of the list
     public void insertFirst (Link newLink) {
-        if (isEmpty()) {
-            firstLink = newLink;
-            lastLink = newLink;
-        }
+        if (isEmpty()) { firstLink = newLink; lastLink = newLink;}
         else {
             Link oldFirstLink = firstLink;
             firstLink = newLink; //newLink becomes first link and its nextLink is the oldFirstLink
