@@ -69,5 +69,6 @@ public class Main {
                 0, 7);
         BoardSpace Boardwalk = new BoardSpace(400, new int[]{50,200,600,1400,1700},
                 8,1);
+
     }
 }

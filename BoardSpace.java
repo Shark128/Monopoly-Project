@@ -1,4 +1,4 @@
-public class BoardSpace {
+public class BoardSpace { // Carson and Shreyes
     public int purchasePrice;
     public int[] rentCost;
     public Player owner;
