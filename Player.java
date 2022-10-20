@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Player {
+public class Player { // Carson and Shreyes
     public int balance;
     public ArrayList<BoardSpace> properties;
     public char icon;

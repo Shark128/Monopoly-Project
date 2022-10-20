@@ -1,4 +1,4 @@
-public class CircularLinkedList {
+public class CircularLinkedList { // Written by Carson, Shreyes, and Bryan
     public Link firstLink;
     public Link lastLink;
     public CircularLinkedList () {firstLink = null; lastLink = null;}

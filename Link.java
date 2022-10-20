@@ -1,4 +1,4 @@
-public class Link<D> {
+public class Link<D> { // Written by Shreyes
     public D data;
     public Link nextLink;
     public Link (D data) {
