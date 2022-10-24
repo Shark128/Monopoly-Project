@@ -166,12 +166,18 @@ public class Main {
             Link<Player> link1 = new Link<Player>(player);
             players.insertFirst(link1);
         }
-        Link currentLink = players.firstLink;
+        Link currentPlayerLink = players.firstLink;
+        Link currentBoardLink = board.firstLink;
         while (!isGameOver(players)) {
-            Player currentPlayer = (Player) currentLink.data;
+            Player currentPlayer = (Player) currentPlayerLink.data;
             gameDie.rollDice();
+            BoardSpace currentPosition = currentPlayer.currBS;
+            for(int i = 0; i < gameDie.totalDiceValue; i++){
+                currentBoardLink = currentBoardLink.nextLink;
+                currentPlayer.currBS = (BoardSpace) currentBoardLink.data;
+            }
 
-            currentLink = currentLink.nextLink;
+            currentPlayerLink = currentPlayerLink.nextLink;
         }
 
     }
