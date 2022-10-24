@@ -170,7 +170,7 @@ public class Main {
 
     }
     //Bryan
-    public boolean openProperty(BoardSpace boardSpace){
+    public static boolean openProperty(BoardSpace boardSpace){
         if (boardSpace.owner != null){
             System.out.println("Would you like to purchase this property for " + boardSpace.purchasePrice + "?" );
             return true;
@@ -180,6 +180,17 @@ public class Main {
             return false;
         }
     }
-
+    //Shreyes
+    public static boolean isGameOver (CircularLinkedList players) {
+        if (players.firstLink == players.lastLink) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public static boolean isBankrupt (Player player) {
+        return player.balance<0;
+    }
 
 }
