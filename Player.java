@@ -17,4 +17,6 @@ public class Player { // Carson and Shreyes
         dead = false;
         currBS = null;
     }
+
+
 }
