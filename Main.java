@@ -164,6 +164,16 @@ public class Main {
             Link<Player> link1 = new Link<Player>(player);
             players.insertFirst(link1);
         }
-
+    }
+    //Bryan
+    public boolean openProperty(BoardSpace boardSpace){
+        if (boardSpace.owner != null){
+            System.out.println("Would you like to purchase this property for " + boardSpace.purchasePrice + "?" );
+            return true;
+        }
+        else{
+            System.out.println("This property is taken. You payed a rent value of");
+            return false;
+        }
     }
 }
