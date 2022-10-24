@@ -170,8 +170,7 @@ public class Main {
         Link currentLink = players.firstLink;
         while(!players.isEmpty()){
             Player currentPlayer = (Player) currentLink.data;
-            int [] = gameDie.rollDice();
-            for(ga)
+
             currentLink = currentLink.nextLink;
         }
     }
