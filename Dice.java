@@ -1,7 +1,7 @@
 public class Dice { // Written by Carson
-    int totalDiceValue;
-    int firstDiceValue;
-    int secondDiceValue;
+    public int totalDiceValue;
+    public int firstDiceValue;
+    public int secondDiceValue;
 
     public Dice(){
         firstDiceValue = 0;
@@ -22,5 +22,6 @@ public class Dice { // Written by Carson
         dieValues[2] = totalDiceValue;
         return dieValues;
     }
+    public boolean isDouble () { return firstDiceValue == secondDiceValue; }
 
 }
