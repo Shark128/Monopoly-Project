@@ -20,11 +20,8 @@ public class CircularLinkedList { // Written by Carson, Shreyes, and Bryan
     // Bryan & Carson
     public Player nextTurn(CircularLinkedList players){
         Link currentLink = players.firstLink;
-        Player currentPlayer = (Player) firstLink.data;
-        while(!players.isEmpty()){
-            currentPlayer = (Player) currentLink.data;
-            currentLink = currentLink.nextLink;
-        }
+        Player currentPlayer = (Player) currentLink.data;
+        currentLink = currentLink.nextLink;
         return currentPlayer;
     }
 }
