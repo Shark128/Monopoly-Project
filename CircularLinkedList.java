@@ -17,22 +17,14 @@ public class CircularLinkedList { // Written by Carson, Shreyes, and Bryan
         }
     }
 
-    // Written by Carson
-    public void rotatePlayers(){ // The turn belongs to whichever player is first.
-        if (firstLink != lastLink) { // Must have more than 1 player for turns to rotate
-            if (firstLink.nextLink == lastLink) { // Special case if there is only two players in the list.
-                Link tempLink = firstLink;
-                firstLink = lastLink;
-                lastLink = tempLink;
-                firstLink.nextLink = lastLink;
-                lastLink.nextLink = firstLink;
-            }
-            else{
-                Link tempLink = firstLink;
-                firstLink = lastLink;
-                lastLink = tempLink;
-                lastLink.nextLink = firstLink;
-            }
+    // Bryan & Carson
+    public Player nextTurn(CircularLinkedList players){
+        Link currentLink = players.firstLink;
+        Player currentPlayer = (Player) firstLink.data;
+        while(!players.isEmpty()){
+            currentPlayer = (Player) currentLink.data;
+            currentLink = currentLink.nextLink;
         }
+        return currentPlayer;
     }
 }
