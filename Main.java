@@ -55,7 +55,8 @@ public class Main {
         BoardSpace New_York_Avenue = new BoardSpace("New York Avenue", 200, new int[]{16, 80, 220, 600, 800, 1000},
                 4, 1);
         Link<BoardSpace> linkNew = new Link<BoardSpace>(New_York_Avenue);
-        // Add FreeParking
+        BoardSpace FreeParking = new BoardSpace("Free Parking", 0, new int[]{}, 0, 5);
+        Link<BoardSpace> linkFre = new Link<BoardSpace>(FreeParking);
         // Written by Shreyes
         BoardSpace Kentucky_Avenue = new BoardSpace("Kentucky Avenue", 220, new int[]{18, 90, 250, 700, 875, 1050},
                 5, 1);
@@ -130,7 +131,8 @@ public class Main {
         board.insertFirst(linkIll);
         board.insertFirst(linkInd);
         board.insertFirst(linkCha);
-        board.insertFirst(linkKen); // board.insertFirst(linkFre);
+        board.insertFirst(linkKen);
+        board.insertFirst(linkFre);
         board.insertFirst(linkNew);
         board.insertFirst(linkTen);
         board.insertFirst(linkCom);
