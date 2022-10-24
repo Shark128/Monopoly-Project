@@ -6,6 +6,7 @@ public class Player { // Carson and Shreyes
     public char icon;
     public boolean inJail;
     public boolean dead;
+    public BoardSpace currBS;
 
     public Player (String name, char icon){
         this.name = name;
@@ -14,5 +15,6 @@ public class Player { // Carson and Shreyes
         this.icon =  icon;
         inJail = false;
         dead = false;
+        currBS = null;
     }
 }

@@ -160,6 +160,7 @@ public class Main {
             String name = scan.next();
             char icon = scan.next().charAt(0);
             Player player = new Player(name, icon);
+            player.currBS = GO;
             Link<Player> link1 = new Link<Player>(player);
             players.insertFirst(link1);
         }
