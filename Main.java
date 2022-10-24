@@ -166,8 +166,14 @@ public class Main {
             Link<Player> link1 = new Link<Player>(player);
             players.insertFirst(link1);
         }
-
-
+        //Bryan
+        Link currentLink = players.firstLink;
+        while(!players.isEmpty()){
+            Player currentPlayer = (Player) currentLink.data;
+            int [] = gameDie.rollDice();
+            for(ga)
+            currentLink = currentLink.nextLink;
+        }
     }
     //Bryan
     public boolean openProperty(BoardSpace boardSpace){
@@ -180,6 +186,4 @@ public class Main {
             return false;
         }
     }
-
-
 }
