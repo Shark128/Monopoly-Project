@@ -16,4 +16,18 @@ public class CircularLinkedList { // Written by Carson, Shreyes, and Bryan
             lastLink.nextLink = firstLink; //Sets the last link's nextLink to the newLink, creating a circular linked list
         }
     }
+
+    public Link find(BoardSpace boardSpace){
+        Link current = firstLink;
+        while(!isEmpty()){
+            if(current.data.equals(boardSpace)){
+                return current;
+            }
+            current = current.nextLink;
+            if(current == firstLink){
+                return null;
+            }
+        }
+        return null;
+    }
 }
