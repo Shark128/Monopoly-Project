@@ -250,17 +250,6 @@ public class Main {
 
         printBoard(topRow, leftCol, rightCol, botRow);
     }
-    //Bryan
-    public static boolean openProperty(BoardSpace boardSpace){
-        if (boardSpace.owner != null){
-            System.out.println("Would you like to purchase this property for " + boardSpace.purchasePrice + "?" );
-            return true;
-        }
-        else{
-            System.out.println("This property is taken. You payed a rent value of");
-            return false;
-        }
-    }
     //Shreyes
     public static boolean isGameOver (CircularLinkedList players) {
         if (players.firstLink == players.lastLink) {
