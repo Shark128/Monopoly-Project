@@ -5,6 +5,7 @@ public class BoardSpace { // Carson and Shreyes
     public Player owner;
     public int color;
     public int buildType;
+    public int upgrades;
 
     public BoardSpace (String name, int purchasePrice, int[] rentCost, int color, int buildType) {
         this.name = name;
@@ -13,5 +14,7 @@ public class BoardSpace { // Carson and Shreyes
         owner = null;
         this.color = color;
         this.buildType = buildType;
+        upgrades = 0;
+
     }
 }

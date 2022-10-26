@@ -209,15 +209,33 @@ public class Main {
 
 
         Link currentPlayerLink = players.firstLink;
-        Link currentBoardLink = board.firstLink;
         while (!isGameOver(players)) {
             Player currentPlayer = (Player) currentPlayerLink.data;
             gameDie.rollDice();
+            Link currentBoardLink = board.find(currentPlayer.currBS);
             BoardSpace currentPosition = currentPlayer.currBS;
             for(int i = 0; i < gameDie.totalDiceValue; i++){
                 currentBoardLink = currentBoardLink.nextLink;
                 currentPlayer.currBS = (BoardSpace) currentBoardLink.data;
             }
+            currentPosition = currentPlayer.currBS;
+            System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue+", totaling " + gameDie.totalDiceValue + ",landing on "+ currentPlayer.currBS.name);
+            System.out.println("What would you like to do? Please the number value accordingly: (0");
+            if(currentPosition.buildType == 1 && currentPosition.owner != null){
+                System.out.println("Would you like to buy "+currentPosition+"?");
+                String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                if(decision.equals("yes")){
+                    if(currentPlayer.balance < currentPosition.purchasePrice)
+                    currentPlayer.balance =- currentPosition.purchasePrice;
+                    currentPosition.owner = currentPlayer;
+                }
+            }
+            else if(currentPosition.buildType == 1 && currentPosition.owner == null){
+                if(currentPosition.)
+            }
+
+
+
 
             currentPlayerLink = currentPlayerLink.nextLink;
         }
