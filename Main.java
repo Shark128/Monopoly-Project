@@ -19,7 +19,13 @@ public class Main {
         rightCol[6] = Empty;
         botRow[2] = Empty;
         botRow[7] = Empty;
-        Link<BoardSpace> linkEmpty = new Link<BoardSpace>(Empty);
+        Link<BoardSpace> linkEmpty1 = new Link<BoardSpace>(Empty);
+        Link<BoardSpace> linkEmpty2 = new Link<BoardSpace>(Empty);
+        Link<BoardSpace> linkEmpty3 = new Link<BoardSpace>(Empty);
+        Link<BoardSpace> linkEmpty4 = new Link<BoardSpace>(Empty);
+        Link<BoardSpace> linkEmpty5 = new Link<BoardSpace>(Empty);
+        Link<BoardSpace> linkEmpty6 = new Link<BoardSpace>(Empty);
+
         BoardSpace GO = new BoardSpace("Go", 0, new int[]{0, 0, 0, 0, 0, 0},
                 0, 0);
         botRow[0] = GO;
@@ -164,10 +170,10 @@ public class Main {
         board.insertFirst(linkBoa);
         board.insertFirst(linkLux);
         board.insertFirst(linkPar);
-        board.insertFirst(linkEmpty);
+        board.insertFirst(linkEmpty6);
         board.insertFirst(linkSho);
         board.insertFirst(linkPe);
-        board.insertFirst(linkEmpty);
+        board.insertFirst(linkEmpty5);
         board.insertFirst(linkNor);
         board.insertFirst(linkPac);
         board.insertFirst(linkGot);
@@ -178,12 +184,12 @@ public class Main {
         board.insertFirst(linkBor);
         board.insertFirst(linkIll);
         board.insertFirst(linkInd);
-        board.insertFirst(linkEmpty);
+        board.insertFirst(linkEmpty4);
         board.insertFirst(linkKen);
         board.insertFirst(linkFre);
         board.insertFirst(linkNew);
         board.insertFirst(linkTen);
-        board.insertFirst(linkEmpty);
+        board.insertFirst(linkEmpty3);
         board.insertFirst(linkStj);
         board.insertFirst(linkPen);
         board.insertFirst(linkVir);
@@ -193,12 +199,12 @@ public class Main {
         board.insertFirst(linkJus);
         board.insertFirst(linkCon);
         board.insertFirst(linkVer);
-        board.insertFirst(linkEmpty);
+        board.insertFirst(linkEmpty2);
         board.insertFirst(linkOri);
         board.insertFirst(linkRea);
         board.insertFirst(linkInc);
         board.insertFirst(linkBal);
-        board.insertFirst(linkEmpty);
+        board.insertFirst(linkEmpty1);
         board.insertFirst(linkMed);
         board.insertFirst(linkGo);
         // Written by Shreyes
@@ -267,26 +273,39 @@ public class Main {
     }
 
     public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow){
+        String spacing = " ";
         System.out.println("┎----------------------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎----------------------------------┓");
-        for(int i = 0; i < 11; i++){
-            System.out.print(topRow[i].name + "        ");
+        System.out.print("           Free Parking                    ");
+        for(int i = 1; i < 11; i++){
+            System.out.print(topRow[i].name + spacing.repeat(25-topRow[i].name.length()));
+        }
+        System.out.println();
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                                            ");
+        for (int i = 1; i<11; i++) {
+            if (topRow[i].purchasePrice != 0) {System.out.print("$" + topRow[i].purchasePrice + spacing.repeat(21));}
+            else { System.out.print(spacing.repeat(25));}
         }
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
-        String spacing = " ";
+
         for(int i = 1; i < 10; i++) {
             System.out.println("┎----------------------------------┓                                                                                                                                                                                                                                 ┎----------------------------------┓");
-
-            System.out.println(leftCol[i].name + spacing.repeat(300) + rightCol[i].name);
+            System.out.print(spacing.repeat(10));
+            System.out.println(leftCol[i].name + spacing.repeat(260-leftCol[i].name.length()) + rightCol[i].name);
 
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            if (leftCol[i].purchasePrice != 0 && rightCol[i].purchasePrice != 0) {
+                System.out.println(spacing.repeat(15) + "$" + leftCol[i].purchasePrice + spacing.repeat(256) + "$" + rightCol[i].purchasePrice);
+            }
+            else if (leftCol[i].purchasePrice == 0) {
+                System.out.println(spacing.repeat(274) + "$" + rightCol[i].purchasePrice);
+            }
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
