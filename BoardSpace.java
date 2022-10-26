@@ -15,5 +15,6 @@ public class BoardSpace { // Carson and Shreyes
         this.color = color;
         this.buildType = buildType;
         upgrades = 0;
+
     }
 }
