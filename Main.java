@@ -11,7 +11,7 @@ public class Main {
         BoardSpace[] leftCol = new BoardSpace[11];
         BoardSpace[] rightCol = new BoardSpace[11];
         BoardSpace[] botRow = new BoardSpace[11];
-        BoardSpace Empty = new BoardSpace("", 0, new int[]{0, 0, 0, 0, 0, 0},
+        BoardSpace Empty = new BoardSpace("", 0, new int[]{},
                 0, 8); // Blank spaces take the spots of Chance/Community chest spots.
         topRow[2] = Empty;
         leftCol[3] = Empty;
@@ -222,7 +222,7 @@ public class Main {
             currentPlayerLink = currentPlayerLink.nextLink;
         }
 
-        BoardSpace.printBoard(topRow, leftCol, rightCol, botRow);
+        printBoard(topRow, leftCol, rightCol, botRow);
     }
     //Bryan
     public static boolean openProperty(BoardSpace boardSpace){
@@ -248,5 +248,45 @@ public class Main {
         return player.balance<0;
     }
 
+    public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow){
+        System.out.println("┎----------------------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎----------------------------------┓");
+        for(int i = 0; i < 11; i++){
+            System.out.print(topRow[i].name + "        ");
+        }
+        System.out.println();
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
+        String spacing = " ";
+        for(int i = 1; i < 10; i++) {
+            System.out.println("┎----------------------------------┓                                                                                                                                                                                                                                 ┎----------------------------------┓");
+
+            System.out.println(leftCol[i].name + spacing.repeat(300) + rightCol[i].name);
+
+            System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.println("┗----------------------------------┛                                                                                                                                                                                                                                 ┗----------------------------------┛");
+        }
+        System.out.println("┎----------------------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎----------------------------------┓");
+        for(int i = 10; i >= 0; i--){
+            System.out.print(botRow[i].name + "        ");
+        }
+        System.out.println();
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
+    }
 
 }
