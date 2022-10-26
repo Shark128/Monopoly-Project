@@ -237,7 +237,9 @@ public class Main {
                 }
             }
             else if(currentPosition.buildType == 1 && currentPosition.owner == null){
-                if(currentPosition.)
+                if(currentPosition.upgrades == 0){
+                    System.out.println("You have payed a rent amount of ");
+                }
             }
 
 
