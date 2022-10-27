@@ -292,8 +292,14 @@ public class Main {
             if (leftCol[i].purchasePrice != 0 && rightCol[i].purchasePrice != 0) {
                 System.out.println(spacing.repeat(15) + "$" + leftCol[i].purchasePrice + spacing.repeat(256) + "$" + rightCol[i].purchasePrice);
             }
-            else if (leftCol[i].purchasePrice == 0) {
+            else if (rightCol[i].purchasePrice != 0) {
                 System.out.println(spacing.repeat(274) + "$" + rightCol[i].purchasePrice);
+            }
+            else if (leftCol[i].purchasePrice != 0) {
+                System.out.println(spacing.repeat(15) + "$" + leftCol[i].purchasePrice);
+            }
+            else {
+                System.out.println();
             }
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
@@ -302,13 +308,19 @@ public class Main {
             System.out.println("┗----------------------------------┛                                                                                                                                                                                                                                 ┗----------------------------------┛");
         }
         System.out.println("┎----------------------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎----------------------------------┓");
-        for(int i = 10; i >= 0; i--){
-            System.out.print(botRow[i].name + "        ");
+        System.out.print("       Just Visiting/In Jail            ");
+        for(int i = 9; i >= 0; i--){
+            System.out.print(botRow[i].name + spacing.repeat(25-botRow[i].name.length()));
         }
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                                            ");
+        for (int i = 9; i>=0; i--) {
+            if (botRow[i].purchasePrice != 0) {System.out.print("$" + botRow[i].purchasePrice + spacing.repeat(21));}
+            else { System.out.print(spacing.repeat(25));}
+        }
+        System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
