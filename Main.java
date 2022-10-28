@@ -245,6 +245,15 @@ public class Main {
         System.out.println("How many players are playing?");
         int n = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
+        for (int j = n; j > 0; j--) {
+            System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
+            String name = scan.next();
+            char icon = scan.next().charAt(0);
+            Player player = new Player(name, icon);
+            player.currBS = (BoardSpace) board.firstLink.data;
+            Link<Player> link1 = new Link<Player>(player);
+            players.insertFirst(link1);
+        }
 
         //Written by Bryan
         Link currentPlayerLink = players.firstLink;
