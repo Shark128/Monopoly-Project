@@ -9,20 +9,30 @@ public class Main {
         BoardSpace[] leftCol = new BoardSpace[11];
         BoardSpace[] rightCol = new BoardSpace[11];
         BoardSpace[] botRow = new BoardSpace[11];
-        BoardSpace Empty = new BoardSpace("Blank Space", 0, new int[]{},
-                0, 8); // Blank spaces take the spots of Chance/Community chest spots.
-        topRow[2] = Empty;
-        leftCol[3] = Empty;
-        rightCol[3] = Empty;
-        rightCol[6] = Empty;
-        botRow[2] = Empty;
-        botRow[7] = Empty;
-        Link<BoardSpace> linkEmpty1 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty2 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty3 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty4 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty5 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty6 = new Link<BoardSpace>(Empty);
+        BoardSpace Empty1 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);// Blank spaces take the spots of Chance/Community chest spots.
+        BoardSpace Empty2 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty3 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty4 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty5 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty6 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        topRow[2] = Empty4;
+        leftCol[3] = Empty3;
+        rightCol[3] = Empty5;
+        rightCol[6] = Empty6;
+        botRow[2] = Empty1;
+        botRow[7] = Empty2;
+        Link<BoardSpace> linkEmpty1 = new Link<BoardSpace>(Empty1);
+        Link<BoardSpace> linkEmpty2 = new Link<BoardSpace>(Empty2);
+        Link<BoardSpace> linkEmpty3 = new Link<BoardSpace>(Empty3);
+        Link<BoardSpace> linkEmpty4 = new Link<BoardSpace>(Empty4);
+        Link<BoardSpace> linkEmpty5 = new Link<BoardSpace>(Empty5);
+        Link<BoardSpace> linkEmpty6 = new Link<BoardSpace>(Empty6);
 
         BoardSpace GO = new BoardSpace("Go", 0, new int[]{0, 0, 0, 0, 0, 0},
                 0, 0);
@@ -271,6 +281,11 @@ public class Main {
             gameDie.secondDiceValue = 0;
             //While loop for the player if they roll doubles
             while(gameDie.firstDiceValue == gameDie.secondDiceValue) {
+                //If player has stayed in jail for 3 turns
+                if(currentPlayer.jailCounter == 3){
+                    System.out.println("You have stayed in jail long enough, you are free to go.");
+                    currentPlayer.inJail = false;
+                }
                 Link currentBoardLink = board.find(currentPlayer.currBS);
                 BoardSpace currentPosition = currentPlayer.currBS;
                 System.out.println(currentPlayer.name + ", it is your turn now. Your current balance is " +currentPlayer.balance);
@@ -289,6 +304,7 @@ public class Main {
                         else{
                             //If dice wasn't a double, they continue to stay in jail, moves to next player's turn
                             System.out.println("You failed to get out.");
+                            currentPlayer.jailCounter++;
                             break;
                         }
                     }
@@ -306,6 +322,7 @@ public class Main {
                             }
                             else{ //They continue to stay in jail
                                 System.out.println("You didn't roll a double, you still have to stay");
+                                currentPlayer.jailCounter++;
                                 break;
                             }
                         }
@@ -508,16 +525,14 @@ public class Main {
                     System.out.println("What would you like to do now: trade, upgrade, or sell (houses/hotels)");
                     String move = scan.next().toLowerCase(Locale.ROOT);
                     //Player is shown the trade menu
-                    if(move.equals("trade")){
-                        tradeProperties(currentPlayer, listOfPlayers);
-                    }
-                    //Player is shown the upgrade menu
-                    else if(move.equals("upgrade")){
-                        currentPlayer.upgradeProperties(colorSets);
-                    }
-                    //Player is shown the sell upgrade menu
-                    else if(move.equals("sell")){
-                        currentPlayer.sellUpgrades(colorSets);
+                    switch (move) {
+                        case "trade" -> tradeProperties(currentPlayer, listOfPlayers);
+
+                        //Player is shown the upgrade menu
+                        case "upgrade" -> currentPlayer.upgradeProperties(colorSets);
+
+                        //Player is shown the sell upgrade menu
+                        case "sell" -> currentPlayer.sellUpgrades(colorSets);
                     }
                 }
             }
@@ -708,43 +723,46 @@ public class Main {
                 Player tradePartner = listOfPlayers.get(i);
                 System.out.println("Here are "+currentPlayer.name+"'s properties: "); // Displays all properties so users are aware what they can trade for.
                 for (int j = 0; j < currentPlayer.properties.size(); j++){
-                    System.out.println(i+": "+currentPlayer.properties.get(j).name);
+                    System.out.println(j+": "+currentPlayer.properties.get(j).name);
                 }
                 System.out.println("Here are "+tradePartner.name+"'s properties: ");
                 for (int k = 0; k < tradePartner.properties.size(); k++){
-                    System.out.println(i+": "+tradePartner.properties.get(k).name);
+                    System.out.println(k+": "+tradePartner.properties.get(k).name);
                 }
 
-                System.out.println(currentPlayer.name+"enter the number (shown above) of the property you want to trade AWAY: ");
+                System.out.println(currentPlayer.name+" enter the number (shown above) of the property you want to trade AWAY: ");
                 int p1PropertyToTrade = sc.nextInt(); // Locates property user wishes to trade away.
                 ArrayList<Integer> p1IndexOfPropertiesToTrade = new ArrayList<Integer>();
                 p1IndexOfPropertiesToTrade.add(p1PropertyToTrade);
 
-                String response = "yes";
+                System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
+                String response = sc.next().toLowerCase(Locale.ROOT);
                 while(response.equals("yes")){
-                    System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
-                    response = sc.next().toLowerCase(Locale.ROOT);
-                    System.out.println(currentPlayer.name+"enter the number (shown above) of the property you want to trade AWAY: ");
+                    System.out.println(currentPlayer.name+" enter the number (shown above) of the property you want to trade AWAY: ");
                     int p1NewPropertyToTrade = sc.nextInt();
                     p1IndexOfPropertiesToTrade.add(p1NewPropertyToTrade);
+                    System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
+                    response = sc.next().toLowerCase(Locale.ROOT);
                 }
 
-                System.out.println(currentPlayer.name+"how much cash do you want to trade? If none, enter 0: ");
+                System.out.println(currentPlayer.name+" how much cash do you want to trade? If none, enter 0: ");
                 int p1CashToTrade = sc.nextInt(); // Cash can be traded as well, but it is not required.
 
-                System.out.println(tradePartner.name+"enter the number (shown above) of the property you want to trade: ");
+                System.out.println(tradePartner.name+" enter the number (shown above) of the property you want to trade: ");
                 int p2PropertyToTrade = sc.nextInt(); // Repeats the same process for other player involved in trade.
                 ArrayList<Integer> p2IndexOfPropertiesToTrade = new ArrayList<Integer>();
                 p2IndexOfPropertiesToTrade.add(p2PropertyToTrade);
-                String p2response = "yes";
+                System.out.println("Do you want to trade more properties?");
+                String p2response = sc.next().toLowerCase(Locale.ROOT);
+                p2response = "yes";
                 while(p2response.equals("yes")){
-                    System.out.println("Do you want to trade more properties?");
-                    p2response = sc.next().toLowerCase(Locale.ROOT);
-                    System.out.println(tradePartner.name+"enter the number (shown above) of the property you want to trade: ");
+                    System.out.println(tradePartner.name+" enter the number (shown above) of the property you want to trade: ");
                     int p2NewPropertyToTrade = sc.nextInt();
                     p2IndexOfPropertiesToTrade.add(p2NewPropertyToTrade);
+                    System.out.println("Do you want to trade more properties?");
+                    p2response = sc.next().toLowerCase(Locale.ROOT);
                 }
-                System.out.println(tradePartner.name+"how much cash do you want to trade? If none, enter 0: ");
+                System.out.println(tradePartner.name+" how much cash do you want to trade? If none, enter 0: ");
                 int p2CashToTrade = sc.nextInt();
 
                 // Informs users of what exactly is being traded.
@@ -796,7 +814,7 @@ public class Main {
                 }
                 else{
                     System.out.println("The trade was not agreed upon. Sorry.");
-                    break; // If the trade is not agreed upon, the process ends.
+                    return; // If the trade is not agreed upon, the process ends.
                 }
             }
         }
