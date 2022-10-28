@@ -26,6 +26,7 @@ public class Main {
 
         BoardSpace GO = new BoardSpace("Go", 0, new int[]{0, 0, 0, 0, 0, 0},
                 0, 0);
+        Collections.fill(GO.occupier, true);
         botRow[0] = GO;
         rightCol[10] = GO;
         Link<BoardSpace> linkGo = new Link<BoardSpace>(GO);
@@ -328,7 +329,7 @@ public class Main {
                 }
                 currentPosition = currentPlayer.currBS;
                 System.out.println("You have landed on " + currentPlayer.currBS.name);
-                printBoard(topRow, leftCol, rightCol, botRow);
+                printBoard(topRow, leftCol, rightCol, botRow, players);
                 if (currentPosition.buildType == 1) {
                     if(currentPosition.owner == null) {
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
@@ -482,7 +483,7 @@ public class Main {
         return player.balance<0;
     }
     // Written by Shreyes and Carson
-    public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow){
+    public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow, CircularLinkedList players){
         // the arrays have the properties as board spaces
         // topRow contains the whole top row, left & rightCol have everything from NYA and Pac. Ave. to the bottom,
         // botRow has just the stuff in between jail and go
@@ -526,6 +527,10 @@ public class Main {
         // finishing up the square
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                     ");
+        for (int j = 0; j<topRow[0].occupier.size(); j++) {
+
+        }
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
         // top row done
