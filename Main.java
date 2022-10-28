@@ -247,6 +247,7 @@ public class Main {
         int numberOfPlayers = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
         ArrayList<Player> pl = new ArrayList<Player>();
+        ArrayList<Player> listOfPlayers = new ArrayList<Player>();
         for (int j = numberOfPlayers; j > 0; j--) {
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
             String name = scan.next();
@@ -254,6 +255,7 @@ public class Main {
             Player player = new Player(name, icon);
             player.currBS = (BoardSpace) board.firstLink.data;
             Link<Player> link1 = new Link<Player>(player);
+            listOfPlayers.add(player);
             players.insertFirst(link1);
         }
 
@@ -457,7 +459,7 @@ public class Main {
                     System.out.println("What would you like to do now: trade, upgrade, or sell (houses/hotels)");
                     String move = scan.next().toLowerCase(Locale.ROOT);
                     if(move.equals("trade")){
-                        //trade
+                        tradeProperties(currentPlayer, listOfPlayers);
                     }
                     else if(move.equals("upgrade")){
                         currentPlayer.upgradeProperties(colorSets);
@@ -643,10 +645,107 @@ public class Main {
     }
 
     // Written by Carson
-    public void tradeProperties(Player currentPlayer){
+    public static void tradeProperties(Player currentPlayer, ArrayList<Player> listOfPlayers){
         Scanner sc = new Scanner(System.in);
         System.out.println("Hi, "+currentPlayer.name+". Enter the name of the player you wish to trade with.");
         String tradePartnerName = sc.next().toLowerCase(Locale.ROOT);
 
+        for (int i = 0; i < listOfPlayers.size(); i++){
+            if (tradePartnerName.equals(listOfPlayers.get(i).name.toLowerCase(Locale.ROOT))){ // Locates tradePartner within player list.
+                Player tradePartner = listOfPlayers.get(i);
+                System.out.println("Here are "+currentPlayer.name+"'s properties: "); // Displays all properties so users are aware what they can trade for.
+                for (int j = 0; j < currentPlayer.properties.size(); j++){
+                    System.out.println(i+": "+currentPlayer.properties.get(j).name);
+                }
+                System.out.println("Here are "+tradePartner.name+"'s properties: ");
+                for (int k = 0; k < tradePartner.properties.size(); k++){
+                    System.out.println(i+": "+tradePartner.properties.get(k).name);
+                }
+
+                System.out.println(currentPlayer.name+"enter the number (shown above) of the property you want to trade AWAY: ");
+                int p1PropertyToTrade = sc.nextInt(); // Locates property user wishes to trade away.
+                ArrayList<Integer> p1IndexOfPropertiesToTrade = new ArrayList<Integer>();
+                p1IndexOfPropertiesToTrade.add(p1PropertyToTrade);
+
+                String response = "yes";
+                while(response.equals("yes")){
+                    System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
+                    response = sc.next().toLowerCase(Locale.ROOT);
+                    System.out.println(currentPlayer.name+"enter the number (shown above) of the property you want to trade AWAY: ");
+                    int p1NewPropertyToTrade = sc.nextInt();
+                    p1IndexOfPropertiesToTrade.add(p1NewPropertyToTrade);
+                }
+
+                System.out.println(currentPlayer.name+"how much cash do you want to trade? If none, enter 0: ");
+                int p1CashToTrade = sc.nextInt(); // Cash can be traded as well, but it is not required.
+
+                System.out.println(tradePartner.name+"enter the number (shown above) of the property you want to trade: ");
+                int p2PropertyToTrade = sc.nextInt(); // Repeats the same process for other player involved in trade.
+                ArrayList<Integer> p2IndexOfPropertiesToTrade = new ArrayList<Integer>();
+                p2IndexOfPropertiesToTrade.add(p2PropertyToTrade);
+                String p2response = "yes";
+                while(p2response.equals("yes")){
+                    System.out.println("Do you want to trade more properties?");
+                    p2response = sc.next().toLowerCase(Locale.ROOT);
+                    System.out.println(tradePartner.name+"enter the number (shown above) of the property you want to trade: ");
+                    int p2NewPropertyToTrade = sc.nextInt();
+                    p2IndexOfPropertiesToTrade.add(p2NewPropertyToTrade);
+                }
+                System.out.println(tradePartner.name+"how much cash do you want to trade? If none, enter 0: ");
+                int p2CashToTrade = sc.nextInt();
+
+                // Informs users of what exactly is being traded.
+                System.out.println(currentPlayer.name+", you are trading away the following: ");
+                for (int l = 0; l < p1IndexOfPropertiesToTrade.size(); l++){
+                    System.out.println(currentPlayer.properties.get(p1IndexOfPropertiesToTrade.get(l)).name);
+                }
+                if (p1CashToTrade > 0){
+                    System.out.println("and "+p1CashToTrade+" dollars.");
+                }
+
+                System.out.println(tradePartner.name+", you are trading away the following: ");
+                for (int m = 0; m < p1IndexOfPropertiesToTrade.size(); m++){
+                    System.out.println(tradePartner.properties.get(p2IndexOfPropertiesToTrade.get(m)).name);
+                }
+                if (p2CashToTrade > 0){
+                    System.out.println("and "+p2CashToTrade+" dollars.");
+                }
+                // Gives users options to deny or accept the trade.
+                System.out.println("Do both players agree to the trade? If not, nothing will happen.");
+                String response3 = sc.next().toLowerCase(Locale.ROOT);
+                if (response3.equals("yes")){
+                    System.out.println("The trade has been agreed upon!");
+                    // Adds or removes cash to users balance depending on how much, if any, they traded.
+                    currentPlayer.balance = currentPlayer.balance - p1CashToTrade + p2CashToTrade;
+                    tradePartner.balance = tradePartner.balance - p2CashToTrade + p1CashToTrade;
+                    // stores users property that they will receive.
+                    ArrayList<BoardSpace> p2PropertyToReceive = new ArrayList<BoardSpace>();
+                    ArrayList<BoardSpace> p1PropertyToReceive = new ArrayList<BoardSpace>();
+                    // removes property each user is trading away and stores in into the other players toReceive arraylist.
+                    for (int n = 0; n < p1IndexOfPropertiesToTrade.size(); n++){
+                        BoardSpace temp = currentPlayer.properties.get(p1IndexOfPropertiesToTrade.get(n));
+                        p2PropertyToReceive.add(temp);
+                        currentPlayer.properties.remove(p1IndexOfPropertiesToTrade.get(n));
+                    }
+                    // Repeats process for player 2.
+                    for (int o = 0; o < p2IndexOfPropertiesToTrade.size(); o++){
+                        BoardSpace temp2 = tradePartner.properties.get(p2IndexOfPropertiesToTrade.get(o));
+                        p1PropertyToReceive.add(temp2);
+                        tradePartner.properties.remove(p2IndexOfPropertiesToTrade.get(o));
+                    }
+                    // Finally adds all properties traded into each users inventory.
+                    for (int p = 0; p < p1PropertyToReceive.size(); p++){
+                       currentPlayer.properties.add(p1PropertyToReceive.get(p));
+                    }
+                    for (int q = 0; q < p2PropertyToReceive.size(); q++){
+                        tradePartner.properties.add(p2PropertyToReceive.get(q));
+                    }
+                }
+                else{
+                    System.out.println("The trade was not agreed upon. Sorry.");
+                    break; // If the trade is not agreed upon, the process ends.
+                }
+            }
+        }
     }
 }
