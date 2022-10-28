@@ -283,7 +283,7 @@ public class Main {
                         }
                     }
                     else{
-                        String input = scan.nextLine().toLowerCase(Locale.ROOT);
+                        String input = scan.next().toLowerCase(Locale.ROOT);
                         if(input.equals("roll")){
                             gameDie.rollDice();
                             System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
@@ -335,7 +335,7 @@ public class Main {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
-                            String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                            String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
@@ -363,7 +363,7 @@ public class Main {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
-                            String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                            String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
@@ -380,9 +380,15 @@ public class Main {
                             break;
                         }
                         else {
-                            currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
-                            currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
-                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
+                            int amountOfProperties = -1;
+                            for(int i = 0; i < currentPosition.owner.properties.size(); i++){
+                                if(currentPosition.owner.properties.get(i).buildType == 2){
+                                    amountOfProperties++;
+                                }
+                            }
+                            currentPlayer.balance -= currentPosition.rentCost[amountOfProperties];
+                            currentPosition.owner.balance += currentPosition.rentCost[amountOfProperties];
+                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[amountOfProperties] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
                 }else if (currentPosition.buildType == 3){
@@ -391,7 +397,7 @@ public class Main {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
-                            String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                            String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
@@ -408,9 +414,15 @@ public class Main {
                             break;
                         }
                         else {
-                            currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
-                            currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
-                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
+                            int amountOfProperties = -1;
+                            for(int i = 0; i < currentPosition.owner.properties.size(); i++){
+                                if(currentPosition.owner.properties.get(i).buildType == 2){
+                                    amountOfProperties++;
+                                }
+                            }
+                            currentPlayer.balance -= currentPosition.rentCost[amountOfProperties];
+                            currentPosition.owner.balance += currentPosition.rentCost[amountOfProperties];
+                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[amountOfProperties] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
                 }else if (currentPosition.buildType == 4){
@@ -431,21 +443,25 @@ public class Main {
                     else{
                         System.out.println("You paid taxes of 200 dollars");
                         currentPlayer.balance -= 200;
+                        System.out.println("Your remaining balance is " +currentPlayer.balance);
                     }
                 }
                 while(true) {
                     System.out.println("Would you like your current turn to be over?");
-                    String answer = scan.nextLine().toLowerCase(Locale.ROOT);
+                    String answer = scan.next().toLowerCase(Locale.ROOT);
                     if(answer.equals("yes")){
                         break;
                     }
-                    System.out.println("What would you like to do now: trade or upgrade");
-                    String move = scan.nextLine().toLowerCase(Locale.ROOT);
+                    System.out.println("What would you like to do now: trade, upgrade, or sell (houses/hotels)");
+                    String move = scan.next().toLowerCase(Locale.ROOT);
                     if(move.equals("trade")){
                         //trade
                     }
                     else if(move.equals("upgrade")){
                         currentPlayer.upgradeProperties(colorSets);
+                    }
+                    else if(move.equals("sell")){
+                        currentPlayer.sellUpgrades(colorSets);
                     }
                 }
             }
