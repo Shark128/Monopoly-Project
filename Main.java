@@ -9,7 +9,7 @@ public class Main {
         BoardSpace[] leftCol = new BoardSpace[11];
         BoardSpace[] rightCol = new BoardSpace[11];
         BoardSpace[] botRow = new BoardSpace[11];
-        BoardSpace Empty = new BoardSpace("", 0, new int[]{},
+        BoardSpace Empty = new BoardSpace("Blank Space", 0, new int[]{},
                 0, 8); // Blank spaces take the spots of Chance/Community chest spots.
         topRow[2] = Empty;
         leftCol[3] = Empty;
@@ -245,6 +245,15 @@ public class Main {
         System.out.println("How many players are playing?");
         int n = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
+        for (int j = n; j > 0; j--) {
+            System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
+            String name = scan.next();
+            char icon = scan.next().charAt(0);
+            Player player = new Player(name, icon);
+            player.currBS = (BoardSpace) board.firstLink.data;
+            Link<Player> link1 = new Link<Player>(player);
+            players.insertFirst(link1);
+        }
 
         //Written by Bryan
         Link currentPlayerLink = players.firstLink;
@@ -256,7 +265,7 @@ public class Main {
             while(gameDie.firstDiceValue == gameDie.secondDiceValue) {
                 Link currentBoardLink = board.find(currentPlayer.currBS);
                 BoardSpace currentPosition = currentPlayer.currBS;
-                System.out.println(currentPlayer.name + ", it is your turn now.");
+                System.out.println(currentPlayer.name + ", it is your turn now. Your current balance is" +currentPlayer.balance);
                 if(currentPlayer.inJail){
                     System.out.print("You are currently in jail and have two options to leave: roll for a double or pay 50 dollars");
                     System.out.println("What would you like to do? (roll or pay)");
@@ -332,6 +341,7 @@ public class Main {
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
                                 System.out.println("You have bought " + currentPosition.name);
+                                System.out.println("Your remaining balance is " +currentPlayer.balance);
                             }
                         }
                     }
@@ -358,6 +368,7 @@ public class Main {
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
                                 System.out.println("You have bought " + currentPosition.name);
+                                System.out.println("Your remaining balance is " +currentPlayer.balance);
                             }
                         }
                     }
@@ -384,6 +395,7 @@ public class Main {
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
                                 System.out.println("You have bought " + currentPosition.name);
+                                System.out.println("Your remaining balance is " +currentPlayer.balance);
                             }
                         }
                     }
@@ -404,7 +416,7 @@ public class Main {
                     currentPlayer.inJail = true;
                     break;
                 }else if (currentPosition.buildType == 5){
-                    //Implement free parking
+                    System.out.println("Congrats you get to park for free!");
                 }else if (currentPosition.buildType == 6){
                     System.out.println("You are just visiting jail so nothing to worry about");
                 }else if (currentPosition.buildType == 7){
@@ -427,7 +439,7 @@ public class Main {
                     System.out.println("What would you like to do now: trade or upgrade");
                     String move = scan.nextLine().toLowerCase(Locale.ROOT);
                     if(move.equals("trade")){
-                        //trade
+                        currentPlayer.upgradeProperties(colorSets);
                     }
                     else if(move.equals("upgrade")){
                         //currentPlayer.upgradeProperties();
