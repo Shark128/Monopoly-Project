@@ -62,56 +62,56 @@ public class Player { // Carson and Shreyes
             for (int j = 0; j < properties.size(); j++) {
                 if (brownCounter == 3 && properties.get(j).color == 1) { // Player must own all properties in a color set for it to be upgraded.
                     // Each property in a set has to be within 1 upgrade of eachother in order to be upgraded, the following if statements make sure this is true before it is input.
-                    if ((properties.get(j).upgrades == colorSets[0][0].upgrades || properties.get(j).upgrades == colorSets[0][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[0][1].upgrades || properties.get(j).upgrades == colorSets[0][1].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[0][0].upgrades || properties.get(j).upgrades + 1 == colorSets[0][0].upgrades) && (properties.get(j).upgrades + 1 == colorSets[0][1].upgrades || properties.get(j).upgrades == colorSets[0][1].upgrades)) {
                         if (properties.get(j).upgrades < 6) { // A property can only be upgraded 5 times.
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (babyBlueCounter == 3 && properties.get(j).color == 2) {
-                    if ((properties.get(j).upgrades == colorSets[1][0].upgrades || properties.get(j).upgrades == colorSets[1][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[1][1].upgrades  || properties.get(j).upgrades == colorSets[1][1].upgrades + 1) && (properties.get(j).upgrades == colorSets[1][2].upgrades || properties.get(j).upgrades == colorSets[1][2].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[1][0].upgrades || properties.get(j).upgrades + 1 == colorSets[1][0].upgrades) && (properties.get(j).upgrades == colorSets[1][1].upgrades  || properties.get(j).upgrades + 1 == colorSets[1][1].upgrades) && (properties.get(j).upgrades == colorSets[1][2].upgrades || properties.get(j).upgrades + 1 == colorSets[1][2].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (pinkCounter == 3 && properties.get(j).color == 3) {
-                    if ((properties.get(j).upgrades == colorSets[2][0].upgrades || properties.get(j).upgrades == colorSets[2][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[2][1].upgrades || properties.get(j).upgrades == colorSets[2][1].upgrades + 1) && (properties.get(j).upgrades == colorSets[2][2].upgrades || properties.get(j).upgrades == colorSets[2][2].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[2][0].upgrades || properties.get(j).upgrades + 1 == colorSets[2][0].upgrades) && (properties.get(j).upgrades == colorSets[2][1].upgrades || properties.get(j).upgrades + 1 == colorSets[2][1].upgrades) && (properties.get(j).upgrades == colorSets[2][2].upgrades || properties.get(j).upgrades + 1 == colorSets[2][2].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (orangeCounter == 3 && properties.get(j).color == 4) {
-                    if ((properties.get(j).upgrades == colorSets[3][0].upgrades || properties.get(j).upgrades == colorSets[3][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[3][1].upgrades || properties.get(j).upgrades == colorSets[3][1].upgrades + 1) && (properties.get(j).upgrades == colorSets[3][2].upgrades || properties.get(j).upgrades == colorSets[3][2].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[3][0].upgrades || properties.get(j).upgrades + 1 == colorSets[3][0].upgrades) && (properties.get(j).upgrades == colorSets[3][1].upgrades || properties.get(j).upgrades + 1 == colorSets[3][1].upgrades) && (properties.get(j).upgrades == colorSets[3][2].upgrades || properties.get(j).upgrades + 1 == colorSets[3][2].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (redCounter == 3 && properties.get(j).color == 5) {
-                    if ((properties.get(j).upgrades == colorSets[4][0].upgrades || properties.get(j).upgrades == colorSets[4][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[4][1].upgrades || properties.get(j).upgrades == colorSets[4][1].upgrades + 1) && (properties.get(j).upgrades == colorSets[4][2].upgrades || properties.get(j).upgrades == colorSets[4][2].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[4][0].upgrades || properties.get(j).upgrades + 1 == colorSets[4][0].upgrades) && (properties.get(j).upgrades == colorSets[4][1].upgrades || properties.get(j).upgrades + 1 == colorSets[4][1].upgrades) && (properties.get(j).upgrades == colorSets[4][2].upgrades || properties.get(j).upgrades + 1 == colorSets[4][2].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (yellowCounter == 3 && properties.get(j).color == 6) {
-                    if ((properties.get(j).upgrades == colorSets[5][0].upgrades || properties.get(j).upgrades == colorSets[5][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[5][1].upgrades || properties.get(j).upgrades == colorSets[5][1].upgrades + 1) && (properties.get(j).upgrades == colorSets[5][2].upgrades || properties.get(j).upgrades == colorSets[5][2].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[5][0].upgrades || properties.get(j).upgrades + 1 == colorSets[5][0].upgrades) && (properties.get(j).upgrades == colorSets[5][1].upgrades || properties.get(j).upgrades + 1 == colorSets[5][1].upgrades) && (properties.get(j).upgrades == colorSets[5][2].upgrades || properties.get(j).upgrades + 1 == colorSets[5][2].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (greenCounter == 3 && properties.get(j).color == 7) {
-                    if ((properties.get(j).upgrades == colorSets[6][0].upgrades || properties.get(j).upgrades == colorSets[6][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[6][1].upgrades || properties.get(j).upgrades == colorSets[6][1].upgrades + 1) && (properties.get(j).upgrades == colorSets[6][2].upgrades|| properties.get(j).upgrades == colorSets[6][2].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[6][0].upgrades || properties.get(j).upgrades + 1 == colorSets[6][0].upgrades) && (properties.get(j).upgrades == colorSets[6][1].upgrades || properties.get(j).upgrades + 1 == colorSets[6][1].upgrades) && (properties.get(j).upgrades == colorSets[6][2].upgrades|| properties.get(j).upgrades + 1 == colorSets[6][2].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
                     }
                 }
                 if (darkBlueCounter == 3 && properties.get(j).color == 8) {
-                    if ((properties.get(j).upgrades == colorSets[7][0].upgrades || properties.get(j).upgrades == colorSets[7][0].upgrades + 1) && (properties.get(j).upgrades == colorSets[7][1].upgrades || properties.get(j).upgrades == colorSets[7][1].upgrades + 1)) {
+                    if ((properties.get(j).upgrades == colorSets[7][0].upgrades || properties.get(j).upgrades + 1 == colorSets[7][0].upgrades) && (properties.get(j).upgrades == colorSets[7][1].upgrades || properties.get(j).upgrades + 1 == colorSets[7][1].upgrades)) {
                         if (properties.get(j).upgrades < 6) {
                             System.out.println(j + ": " + properties.get(j).name);
                         }
@@ -179,42 +179,42 @@ public class Player { // Carson and Shreyes
         for (int j = 0; j < properties.size(); j++) {
             if (response == j) {
                 // Just like how properties must be evenly upgraded, their upgrades must be evenly sold as well. Also, only 1 upgrade can be sold at a time.
-                if ((properties.get(j).upgrades == colorSets[0][0].upgrades || properties.get(j).upgrades == colorSets[0][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[0][1].upgrades || properties.get(j).upgrades == colorSets[0][1].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[0][0].upgrades || properties.get(j).upgrades - 1 == colorSets[0][0].upgrades) && (properties.get(j).upgrades == colorSets[0][1].upgrades || properties.get(j).upgrades - 1 == colorSets[0][1].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 13; // Half of 25 is technically 12.5, but monopoly rules state you get to pick to round up or down on decimals.
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[1][0].upgrades || properties.get(j).upgrades == colorSets[1][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[1][1].upgrades || properties.get(j).upgrades == colorSets[1][1].upgrades - 1) && (properties.get(j).upgrades == colorSets[1][2].upgrades || properties.get(j).upgrades == colorSets[1][2].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[1][0].upgrades || properties.get(j).upgrades - 1 == colorSets[1][0].upgrades) && (properties.get(j).upgrades == colorSets[1][1].upgrades || properties.get(j).upgrades - 1 == colorSets[1][1].upgrades) && (properties.get(j).upgrades == colorSets[1][2].upgrades || properties.get(j).upgrades - 1 == colorSets[1][2].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 13;
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[2][0].upgrades || properties.get(j).upgrades == colorSets[2][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[2][1].upgrades || properties.get(j).upgrades == colorSets[2][1].upgrades - 1) && (properties.get(j).upgrades == colorSets[2][2].upgrades || properties.get(j).upgrades == colorSets[2][2].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[2][0].upgrades || properties.get(j).upgrades - 1 == colorSets[2][0].upgrades) && (properties.get(j).upgrades == colorSets[2][1].upgrades || properties.get(j).upgrades - 1 == colorSets[2][1].upgrades) && (properties.get(j).upgrades == colorSets[2][2].upgrades || properties.get(j).upgrades - 1 == colorSets[2][2].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 25; // Every 2 color types, the cost of building a house/hotel goes up, so the user will be reimbursed more as well when they sell this upgrade.
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[3][0].upgrades || properties.get(j).upgrades == colorSets[3][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[3][1].upgrades || properties.get(j).upgrades == colorSets[3][1].upgrades - 1) && (properties.get(j).upgrades == colorSets[3][2].upgrades || properties.get(j).upgrades == colorSets[3][2].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[3][0].upgrades || properties.get(j).upgrades - 1 == colorSets[3][0].upgrades) && (properties.get(j).upgrades == colorSets[3][1].upgrades || properties.get(j).upgrades - 1 == colorSets[3][1].upgrades) && (properties.get(j).upgrades == colorSets[3][2].upgrades || properties.get(j).upgrades - 1 == colorSets[3][2].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 25;
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[4][0].upgrades || properties.get(j).upgrades == colorSets[4][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[4][1].upgrades || properties.get(j).upgrades == colorSets[4][1].upgrades - 1) && (properties.get(j).upgrades == colorSets[4][2].upgrades || properties.get(j).upgrades == colorSets[4][2].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[4][0].upgrades || properties.get(j).upgrades - 1 == colorSets[4][0].upgrades) && (properties.get(j).upgrades == colorSets[4][1].upgrades || properties.get(j).upgrades - 1 == colorSets[4][1].upgrades) && (properties.get(j).upgrades == colorSets[4][2].upgrades || properties.get(j).upgrades - 1 == colorSets[4][2].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 38;
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[5][0].upgrades || properties.get(j).upgrades == colorSets[5][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[5][1].upgrades || properties.get(j).upgrades == colorSets[5][1].upgrades - 1) && (properties.get(j).upgrades == colorSets[5][2].upgrades || properties.get(j).upgrades == colorSets[5][2].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[5][0].upgrades || properties.get(j).upgrades - 1 == colorSets[5][0].upgrades) && (properties.get(j).upgrades == colorSets[5][1].upgrades || properties.get(j).upgrades - 1 == colorSets[5][1].upgrades) && (properties.get(j).upgrades == colorSets[5][2].upgrades || properties.get(j).upgrades - 1 == colorSets[5][2].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 38;
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[6][0].upgrades || properties.get(j).upgrades == colorSets[6][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[6][1].upgrades || properties.get(j).upgrades == colorSets[6][1].upgrades - 1) && (properties.get(j).upgrades == colorSets[6][2].upgrades || properties.get(j).upgrades == colorSets[6][2].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[6][0].upgrades || properties.get(j).upgrades - 1 == colorSets[6][0].upgrades) && (properties.get(j).upgrades == colorSets[6][1].upgrades || properties.get(j).upgrades - 1 == colorSets[6][1].upgrades) && (properties.get(j).upgrades == colorSets[6][2].upgrades || properties.get(j).upgrades - 1 == colorSets[6][2].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 50;
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
                 }
-                if ((properties.get(j).upgrades == colorSets[7][0].upgrades || properties.get(j).upgrades == colorSets[7][0].upgrades - 1) && (properties.get(j).upgrades == colorSets[7][1].upgrades || properties.get(j).upgrades == colorSets[7][1].upgrades - 1)) {
+                if ((properties.get(j).upgrades == colorSets[7][0].upgrades || properties.get(j).upgrades - 1 == colorSets[7][0].upgrades) && (properties.get(j).upgrades == colorSets[7][1].upgrades || properties.get(j).upgrades - 1 == colorSets[7][1].upgrades)) {
                     System.out.println("The upgrade has been sold. You have received half of the cost to initially upgraded it, and the property has lost an upgrade level.");
                     this.balance = this.balance + 50;
                     properties.get(j).upgrades = properties.get(j).upgrades - 1;
