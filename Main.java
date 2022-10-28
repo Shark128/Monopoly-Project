@@ -500,6 +500,35 @@ public class Main {
             System.out.println(leftCol[i].name + spacing.repeat(260-leftCol[i].name.length()) + rightCol[i].name);
 
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+
+            int upgradeNum = leftCol[i].upgrades;
+            if (upgradeNum == 0) {
+                // do nothing
+            }
+            else if (upgradeNum<5) {
+                for (int j = 0; j<upgradeNum; j++) {
+                    System.out.print("^");
+                }
+            }
+            else {
+                System.out.print("||");
+            }
+            System.out.print(spacing.repeat(270));
+            upgradeNum = rightCol[i].upgrades;
+            if (upgradeNum == 0) {
+                // do nothing
+            }
+            else if (upgradeNum<5) {
+                for (int j = 0; j<upgradeNum; j++) {
+                    System.out.print("^");
+                }
+            }
+            else {
+                System.out.print("||");
+            }
+
+
+            System.out.println();
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             if (leftCol[i].purchasePrice != 0 && rightCol[i].purchasePrice != 0) {
                 System.out.println(spacing.repeat(15) + "$" + leftCol[i].purchasePrice + spacing.repeat(256) + "$" + rightCol[i].purchasePrice);
@@ -526,6 +555,21 @@ public class Main {
         }
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                                            ");
+        for (int i = 9; i>=0; i--) {
+            int upgradeNum = botRow[i].upgrades;
+            if (upgradeNum == 0) continue;
+            else if (upgradeNum<5) {
+                for (int j = 0; j<upgradeNum; j++) {
+                    System.out.print("^");
+                }
+            }
+            else {
+                System.out.print("||");
+            }
+            System.out.print(spacing.repeat(22-upgradeNum));
+        }
+        System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.print("                                            ");
         for (int i = 9; i>=0; i--) {
