@@ -246,42 +246,196 @@ public class Main {
         int n = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
 
-
+        //Written by Bryan
         Link currentPlayerLink = players.firstLink;
         while (!isGameOver(players)) {
             Player currentPlayer = (Player) currentPlayerLink.data;
-            gameDie.rollDice();
-            Link currentBoardLink = board.find(currentPlayer.currBS);
-            BoardSpace currentPosition = currentPlayer.currBS;
-            for(int i = 0; i < gameDie.totalDiceValue; i++){
-                currentBoardLink = currentBoardLink.nextLink;
-                currentPlayer.currBS = (BoardSpace) currentBoardLink.data;
-            }
-            currentPosition = currentPlayer.currBS;
-            System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue+", totaling " + gameDie.totalDiceValue + ",landing on "+ currentPlayer.currBS.name);
-            System.out.println("What would you like to do? Please the number value accordingly: (0");
-            if(currentPosition.buildType == 1 && currentPosition.owner != null){
-                System.out.println("Would you like to buy "+currentPosition+"?");
-                String decision = scan.nextLine().toLowerCase(Locale.ROOT);
-                if(decision.equals("yes")){
-                    if(currentPlayer.balance < currentPosition.purchasePrice)
-                    currentPlayer.balance =- currentPosition.purchasePrice;
-                    currentPosition.owner = currentPlayer;
+            int doubleCounter = 0;
+            gameDie.firstDiceValue = 0;
+            gameDie.secondDiceValue = 0;
+            while(gameDie.firstDiceValue == gameDie.secondDiceValue) {
+                Link currentBoardLink = board.find(currentPlayer.currBS);
+                BoardSpace currentPosition = currentPlayer.currBS;
+                System.out.println(currentPlayer.name + ", it is your turn now.");
+                if(currentPlayer.inJail){
+                    System.out.print("You are currently in jail and have two options to leave: roll for a double or pay 50 dollars");
+                    System.out.println("What would you like to do? (roll or pay)");
+                    if(currentPlayer.balance < 50) {
+                        System.out.println("You can't afford paying the fee so you have to roll the die");
+                        gameDie.rollDice();
+                        System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
+                        if (gameDie.firstDiceValue == gameDie.secondDiceValue){
+                            System.out.println("You got out of jail!");
+                            currentPlayer.inJail = false;
+                        }
+                        else{
+                            System.out.println("You failed to get out.");
+                            break;
+                        }
+                    }
+                    else{
+                        String input = scan.nextLine().toLowerCase(Locale.ROOT);
+                        if(input.equals("roll")){
+                            gameDie.rollDice();
+                            System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
+                            if (gameDie.firstDiceValue == gameDie.secondDiceValue){
+                                System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
+                                System.out.println("You got out of jail!");
+                                currentPlayer.inJail = false;
+                            }
+                            else{
+                                System.out.println("You didn't roll a double, you still have to stay");
+                                break;
+                            }
+                        }
+                        else if(input.equals("pay")){
+                            System.out.println("You have paid 50 dollars to leave jail");
+                            currentPlayer.balance -= 50;
+                            currentPlayer.inJail = false;
+                            gameDie.rollDice();
+                            System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
+                        }
+                    }
+                }
+                else{
+                    gameDie.rollDice();
+                    System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
+                }
+                if(gameDie.firstDiceValue == gameDie.secondDiceValue) {
+                    doubleCounter++;
+                }
+                if(doubleCounter == 3){
+                    System.out.println("You have rolled 3 doubles in a row, you have gone to jail, your turn has ended.");
+                    currentPlayer.currBS = JustVisiting_InJail;
+                    break;
+                }
+                for (int i = 0; i < gameDie.totalDiceValue; i++) {
+                    currentBoardLink = currentBoardLink.nextLink;
+                    currentPlayer.currBS = (BoardSpace) currentBoardLink.data;
+                    if (currentPlayer.currBS.equals(GO)) {
+                        System.out.println("You have passed GO. You have collected 200 dollars");
+                        currentPlayer.balance += 200;
+                    }
+                }
+                currentPosition = currentPlayer.currBS;
+                System.out.println("You have landed on " + currentPlayer.currBS.name);
+                printBoard(topRow, leftCol, rightCol, botRow);
+                if (currentPosition.buildType == 1) {
+                    if(currentPosition.owner == null) {
+                        if (currentPlayer.balance < currentPosition.purchasePrice) {
+                            System.out.println("You don't have enough money to buy this property.");
+                        } else {
+                            System.out.println("Would you like to buy " + currentPosition.name + "?");
+                            String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                            if (decision.equals("yes")) {
+                                currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
+                                currentPosition.owner = currentPlayer;
+                                currentPlayer.properties.add(currentPosition);
+                                System.out.println("You have bought " + currentPosition.name);
+                            }
+                        }
+                    }
+                    else{
+                        if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
+                            System.out.println("You do not have enough money you lose");
+                            //Delete this player and break
+                        }
+                        else {
+                            currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
+                            currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
+                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
+                        }
+                    }
+                } else if (currentPosition.buildType == 2){
+                    if(currentPosition.owner == null) {
+                        if (currentPlayer.balance < currentPosition.purchasePrice) {
+                            System.out.println("You don't have enough money to buy this property.");
+                        } else {
+                            System.out.println("Would you like to buy " + currentPosition.name + "?");
+                            String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                            if (decision.equals("yes")) {
+                                currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
+                                currentPosition.owner = currentPlayer;
+                                currentPlayer.properties.add(currentPosition);
+                                System.out.println("You have bought " + currentPosition.name);
+                            }
+                        }
+                    }
+                    else{
+                        if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
+                            System.out.println("You do not have enough money you lose");
+                            //Delete this player and break
+                        }
+                        else {
+                            currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
+                            currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
+                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
+                        }
+                    }
+                }else if (currentPosition.buildType == 3){
+                    if(currentPosition.owner == null) {
+                        if (currentPlayer.balance < currentPosition.purchasePrice) {
+                            System.out.println("You don't have enough money to buy this property.");
+                        } else {
+                            System.out.println("Would you like to buy " + currentPosition.name + "?");
+                            String decision = scan.nextLine().toLowerCase(Locale.ROOT);
+                            if (decision.equals("yes")) {
+                                currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
+                                currentPosition.owner = currentPlayer;
+                                currentPlayer.properties.add(currentPosition);
+                                System.out.println("You have bought " + currentPosition.name);
+                            }
+                        }
+                    }
+                    else{
+                        if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
+                            System.out.println("You do not have enough money you lose");
+                            //Delete this player and break
+                        }
+                        else {
+                            currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
+                            currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
+                            System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
+                        }
+                    }
+                }else if (currentPosition.buildType == 4){
+                    System.out.println("You are going to jail");
+                    currentPlayer.currBS = JustVisiting_InJail;
+                    currentPlayer.inJail = true;
+                    break;
+                }else if (currentPosition.buildType == 5){
+                    //Implement free parking
+                }else if (currentPosition.buildType == 6){
+                    System.out.println("You are just visiting jail so nothing to worry about");
+                }else if (currentPosition.buildType == 7){
+                    if(currentPlayer.balance < 200){
+                        System.out.println("The taxes gottcha, you lose");
+                        //delete this player
+                        break;
+                    }
+                    else{
+                        System.out.println("You paid taxes of 200 dollars");
+                        currentPlayer.balance -= 200;
+                    }
+                }
+                while(true) {
+                    System.out.println("Would you like your current turn to be over?");
+                    String answer = scan.nextLine().toLowerCase(Locale.ROOT);
+                    if(answer.equals("yes")){
+                        break;
+                    }
+                    System.out.println("What would you like to do now: trade or upgrade");
+                    String move = scan.nextLine().toLowerCase(Locale.ROOT);
+                    if(move.equals("trade")){
+                        //trade
+                    }
+                    else if(move.equals("upgrade")){
+                        //currentPlayer.upgradeProperties();
+                    }
                 }
             }
-            else if(currentPosition.buildType == 1 && currentPosition.owner == null){
-                if(currentPosition.upgrades == 0){
-                    System.out.println("You have payed a rent amount of ");
-                }
-            }
-
-
-
-
             currentPlayerLink = currentPlayerLink.nextLink;
         }
-
-        printBoard(topRow, leftCol, rightCol, botRow);
     }
     //Shreyes
     public static boolean isGameOver (CircularLinkedList players) {
@@ -305,7 +459,21 @@ public class Main {
         }
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                                            ");
+        for (int i = 1; i<11; i++) {
+            int upgradeNum = topRow[i].upgrades;
+            if (upgradeNum == 0) continue;
+            else if (upgradeNum<5) {
+                for (int j = 0; j<upgradeNum; j++) {
+                    System.out.print("^");
+                }
+            }
+            else {
+                System.out.print("||");
+            }
+            System.out.print(spacing.repeat(22-upgradeNum));
+        }
+        System.out.println();
         System.out.print("                                            ");
         for (int i = 1; i<11; i++) {
             if (topRow[i].purchasePrice != 0) {System.out.print("$" + topRow[i].purchasePrice + spacing.repeat(21));}
