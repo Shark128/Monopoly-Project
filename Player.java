@@ -32,8 +32,6 @@ public class Player { // Carson and Shreyes
         int yellowCounter = 0;
         int greenCounter = 0;
         int darkBlueCounter = 1;
-        System.out.println("These are your properties that you could upgrade. Note some may not be shown as properties must be upgraded evenly (you cannot build 2 houses on a property before all others in the set have 1)");
-        System.out.println("Please enter the number for which one you want to upgrade.");
         for (int i = 0; i < properties.size(); i++) {
             if (properties.get(i).color == 1) {
                 brownCounter++; // For every property a player owns for a certain color, the counter will go up.
@@ -58,6 +56,14 @@ public class Player { // Carson and Shreyes
             }
             if (properties.get(i).color == 8) {
                 darkBlueCounter++;
+            }
+            // A user must own a full set in order for upgrades to happen, this checks that the user is eligible to upgrade.
+            if(brownCounter == 3 || babyBlueCounter == 3 || pinkCounter == 3 || orangeCounter == 3 || redCounter == 3 || yellowCounter == 3 || greenCounter == 3 || darkBlueCounter == 3){
+                System.out.println("These are your properties that you could upgrade. Note some may not be shown as properties must be upgraded evenly (you cannot build 2 houses on a property before all others in the set have 1)");
+                System.out.println("Please enter the number for which one you want to upgrade.");
+            }
+            else{
+                System.out.println("You don't own any full sets, or your properties are not eligible for upgrades. Sorry!");
             }
             for (int j = 0; j < properties.size(); j++) {
                 if (brownCounter == 3 && properties.get(j).color == 1) { // Player must own all properties in a color set for it to be upgraded.
