@@ -401,8 +401,6 @@ public class Main {
             }
             currentPlayerLink = currentPlayerLink.nextLink;
         }
-
-        printBoard(topRow, leftCol, rightCol, botRow);
     }
     //Shreyes
     public static boolean isGameOver (CircularLinkedList players) {
