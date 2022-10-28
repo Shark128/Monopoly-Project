@@ -426,7 +426,21 @@ public class Main {
         }
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                                            ");
+        for (int i = 1; i<11; i++) {
+            int upgradeNum = topRow[i].upgrades;
+            if (upgradeNum == 0) continue;
+            else if (upgradeNum<5) {
+                for (int j = 0; j<upgradeNum; j++) {
+                    System.out.print("^");
+                }
+            }
+            else {
+                System.out.print("||");
+            }
+            System.out.print(spacing.repeat(22-upgradeNum));
+        }
+        System.out.println();
         System.out.print("                                            ");
         for (int i = 1; i<11; i++) {
             if (topRow[i].purchasePrice != 0) {System.out.print("$" + topRow[i].purchasePrice + spacing.repeat(21));}
