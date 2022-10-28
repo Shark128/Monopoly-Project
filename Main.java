@@ -754,7 +754,6 @@ public class Main {
                 p2IndexOfPropertiesToTrade.add(p2PropertyToTrade);
                 System.out.println("Do you want to trade more properties?");
                 String p2response = sc.next().toLowerCase(Locale.ROOT);
-                p2response = "yes";
                 while(p2response.equals("yes")){
                     System.out.println(tradePartner.name+" enter the number (shown above) of the property you want to trade: ");
                     int p2NewPropertyToTrade = sc.nextInt();
