@@ -246,6 +246,7 @@ public class Main {
         System.out.println("How many players are playing?");
         int numberOfPlayers = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
+        ArrayList<Player> pl = new ArrayList<Player>();
         for (int j = numberOfPlayers; j > 0; j--) {
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
             String name = scan.next();
@@ -329,7 +330,7 @@ public class Main {
                 }
                 currentPosition = currentPlayer.currBS;
                 System.out.println("You have landed on " + currentPlayer.currBS.name);
-                printBoard(topRow, leftCol, rightCol, botRow, players);
+                printBoard(topRow, leftCol, rightCol, botRow, pl);
                 if (currentPosition.buildType == 1) {
                     if(currentPosition.owner == null) {
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
@@ -467,7 +468,7 @@ public class Main {
         return player.balance<0;
     }
     // Written by Shreyes and Carson
-    public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow, CircularLinkedList players){
+    public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow, ArrayList<Player> players){
         // the arrays have the properties as board spaces
         // topRow contains the whole top row, left & rightCol have everything from NYA and Pac. Ave. to the bottom,
         // botRow has just the stuff in between jail and go
@@ -511,9 +512,16 @@ public class Main {
         // finishing up the square
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.print("                     ");
-        for (int j = 0; j<topRow[0].occupier.size(); j++) {
-
+        System.out.print("                    ");
+        for (int i = 0; i<11; i++) {
+            for (int j = 0; j<topRow[i].occupier.size(); j++) {
+                if (topRow[i].occupier.get(j)) {
+                    System.out.print(players.get(j).icon + "                    ");
+                }
+                else {
+                    System.out.print("                     ");
+                }
+            } // fix this
         }
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
