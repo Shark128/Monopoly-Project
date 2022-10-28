@@ -243,9 +243,9 @@ public class Main {
         // Written by Shreyes
         Scanner scan = new Scanner(System.in);
         System.out.println("How many players are playing?");
-        int n = scan.nextInt();
+        int numberOfPlayers = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
-        for (int j = n; j > 0; j--) {
+        for (int j = numberOfPlayers; j > 0; j--) {
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
             String name = scan.next();
             char icon = scan.next().charAt(0);
@@ -477,55 +477,71 @@ public class Main {
             return false;
         }
     }
+    // Carson
     public static boolean isBankrupt (Player player) {
         return player.balance<0;
     }
-
+    // Written by Shreyes and Carson
     public static void printBoard(BoardSpace[] topRow, BoardSpace[] leftCol, BoardSpace[] rightCol, BoardSpace[] botRow){
-        String spacing = " ";
+        // the arrays have the properties as board spaces
+        // topRow contains the whole top row, left & rightCol have everything from NYA and Pac. Ave. to the bottom,
+        // botRow has just the stuff in between jail and go
+        String spacing = " "; // this is for convenience so I can use .repeat
         System.out.println("┎----------------------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎----------------------------------┓");
+        // above is the top of the board
         System.out.print("           Free Parking                    ");
+        // Free Parking is hardcoded so I have the corner b/c all of the corners are a bit strange
+        // Could have done without hardcoding but I wasn't sure how at the time I made this so I didn't
         for(int i = 1; i < 11; i++){
             System.out.print(topRow[i].name + spacing.repeat(25-topRow[i].name.length()));
         }
+        // this prints the names of the topRow spaces at the top of the square, putting spaces between the names
+        // corresponding to the length of the space name (to make spacing work properly)
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        // this section deals with printing upgrades, the spacing might be scuffed at the time of making but will fix
         System.out.print("                                            ");
         for (int i = 1; i<11; i++) {
             int upgradeNum = topRow[i].upgrades;
-            if (upgradeNum == 0) continue;
+            if (upgradeNum == 0) continue; // keep moving if there are no properties
             else if (upgradeNum<5) {
                 for (int j = 0; j<upgradeNum; j++) {
-                    System.out.print("^");
+                    System.out.print("^"); // this is the symbol for a house, you have up to 4 houses
                 }
             }
-            else {
-                System.out.print("||");
+            else { // hopefully you don't have a negative or >5 upgrade number
+                System.out.print("||"); // hotel symbol
             }
-            System.out.print(spacing.repeat(22-upgradeNum));
+            System.out.print(spacing.repeat(22)); // here the amount of characters is so few that I don't need
+            // to base it off of spacing for it to be spaced decently well
         }
         System.out.println();
         System.out.print("                                            ");
+        // this section is for the purchase price, only prints a price if that price is not 0
         for (int i = 1; i<11; i++) {
             if (topRow[i].purchasePrice != 0) {System.out.print("$" + topRow[i].purchasePrice + spacing.repeat(21));}
             else { System.out.print(spacing.repeat(25));}
         }
         System.out.println();
+        // finishing up the square
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
-
-        for(int i = 1; i < 10; i++) {
+        // top row done
+        // left & right cols (together b/c java goes down when printing)
+        for(int i = 1; i < 10; i++) { // starts from 1 b/c the top row was 0
             System.out.println("┎----------------------------------┓                                                                                                                                                                                                                                 ┎----------------------------------┓");
             System.out.print(spacing.repeat(10));
             System.out.println(leftCol[i].name + spacing.repeat(260-leftCol[i].name.length()) + rightCol[i].name);
-
+            // for similar reasons as topRow's names, the spacing is based on the length of the left name
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
-
+            // leftCol's upgrades - basically the same as topRow's properties
             int upgradeNum = leftCol[i].upgrades;
             if (upgradeNum == 0) {
                 // do nothing
+                // this is the only difference between topRow's upgrades & column upgrades b/c continue would send you
+                // down one space which is bad
             }
             else if (upgradeNum<5) {
                 for (int j = 0; j<upgradeNum; j++) {
@@ -535,7 +551,8 @@ public class Main {
             else {
                 System.out.print("||");
             }
-            System.out.print(spacing.repeat(270));
+            System.out.print(spacing.repeat(260)); // spacing in between
+            // rightCol's upgrades
             upgradeNum = rightCol[i].upgrades;
             if (upgradeNum == 0) {
                 // do nothing
@@ -552,6 +569,8 @@ public class Main {
 
             System.out.println();
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            // purchase price, the difference between here and above is that if price is 0 the print statement changes
+            // to accommodate the fact that there is nothing
             if (leftCol[i].purchasePrice != 0 && rightCol[i].purchasePrice != 0) {
                 System.out.println(spacing.repeat(15) + "$" + leftCol[i].purchasePrice + spacing.repeat(256) + "$" + rightCol[i].purchasePrice);
             }
@@ -570,8 +589,13 @@ public class Main {
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("┗----------------------------------┛                                                                                                                                                                                                                                 ┗----------------------------------┛");
         }
+        // columns done
+        // botRow
         System.out.println("┎----------------------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎-----------------------┓┎----------------------------------┓");
         System.out.print("       Just Visiting/In Jail            ");
+        // fix above
+        // starts from 9 because 10 is Just Visiting/In Jail and that's dealt with specially
+        // everything here is all but the same as topRow
         for(int i = 9; i >= 0; i--){
             System.out.print(botRow[i].name + spacing.repeat(25-botRow[i].name.length()));
         }
@@ -605,4 +629,11 @@ public class Main {
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
     }
 
+    // Written by Carson
+    public void tradeProperties(Player currentPlayer){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Hi, "+currentPlayer.name+". Enter the name of the player you wish to trade with.");
+        String tradePartnerName = sc.next().toLowerCase(Locale.ROOT);
+
+    }
 }

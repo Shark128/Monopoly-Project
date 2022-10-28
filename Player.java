@@ -64,6 +64,7 @@ public class Player { // Carson and Shreyes
             }
             else{
                 System.out.println("You don't own any full sets, or your properties are not eligible for upgrades. Sorry!");
+                break;
             }
             for (int j = 0; j < properties.size(); j++) {
                 if (brownCounter == 3 && properties.get(j).color == 1) { // Player must own all properties in a color set for it to be upgraded.
