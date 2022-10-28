@@ -29,6 +29,7 @@ public class Main {
         Collections.fill(GO.occupier, true);
         botRow[0] = GO;
         rightCol[10] = GO;
+        //Creation of all Boardspaces
         Link<BoardSpace> linkGo = new Link<BoardSpace>(GO);
         BoardSpace Mediterranean_Avenue = new BoardSpace("Mediterranean Avenue", 60, new int[]{2, 10, 30, 90, 160, 250},
                 1, 1);
@@ -248,7 +249,7 @@ public class Main {
         CircularLinkedList players = new CircularLinkedList();
         ArrayList<Player> pl = new ArrayList<Player>();
         ArrayList<Player> listOfPlayers = new ArrayList<Player>();
-        for (int j = numberOfPlayers; j > 0; j--) {
+        for (int j = numberOfPlayers; j > 0; j--) { //Scans and enters all players' name and piece symbol
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
             String name = scan.next();
             char icon = scan.next().charAt(0);
@@ -260,71 +261,86 @@ public class Main {
         }
 
         //Written by Bryan
+        //Creates link for first player
         Link currentPlayerLink = players.firstLink;
-        while (!isGameOver(players)) {
+        while (!isGameOver(players)) { //While for until game is over (until 1 player left)
             Player currentPlayer = (Player) currentPlayerLink.data;
-            int doubleCounter = 0;
+            int doubleCounter = 0; //Counter for number of times player has gone in a row
+            //resets die values
             gameDie.firstDiceValue = 0;
             gameDie.secondDiceValue = 0;
+            //While loop for the player if they roll doubles
             while(gameDie.firstDiceValue == gameDie.secondDiceValue) {
                 Link currentBoardLink = board.find(currentPlayer.currBS);
                 BoardSpace currentPosition = currentPlayer.currBS;
-                System.out.println(currentPlayer.name + ", it is your turn now. Your current balance is" +currentPlayer.balance);
-                if(currentPlayer.inJail){
+                System.out.println(currentPlayer.name + ", it is your turn now. Your current balance is " +currentPlayer.balance);
+                if(currentPlayer.inJail){ //Checks if currentPlayer is in jail
                     System.out.print("You are currently in jail and have two options to leave: roll for a double or pay 50 dollars");
                     System.out.println("What would you like to do? (roll or pay)");
-                    if(currentPlayer.balance < 50) {
+                    if(currentPlayer.balance < 50) { //If they can't afford to pay to leave jail they have to roll
                         System.out.println("You can't afford paying the fee so you have to roll the die");
                         gameDie.rollDice();
                         System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
+                        //If dice roll if a double, then they get out of jail, moving according to the roll
                         if (gameDie.firstDiceValue == gameDie.secondDiceValue){
                             System.out.println("You got out of jail!");
                             currentPlayer.inJail = false;
                         }
                         else{
+                            //If dice wasn't a double, they continue to stay in jail, moves to next player's turn
                             System.out.println("You failed to get out.");
                             break;
                         }
                     }
                     else{
                         String input = scan.next().toLowerCase(Locale.ROOT);
+                        //If they want to roll
                         if(input.equals("roll")){
                             gameDie.rollDice();
                             System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
+                            //If they roll a double, they leave jail and move according to the roll
                             if (gameDie.firstDiceValue == gameDie.secondDiceValue){
                                 System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
                                 System.out.println("You got out of jail!");
                                 currentPlayer.inJail = false;
                             }
-                            else{
+                            else{ //They continue to stay in jail
                                 System.out.println("You didn't roll a double, you still have to stay");
                                 break;
                             }
                         }
+                        //If they choose to pay the money
                         else if(input.equals("pay")){
+                            //Removes 50 from their balance and they are no longer in jail
                             System.out.println("You have paid 50 dollars to leave jail");
                             currentPlayer.balance -= 50;
                             currentPlayer.inJail = false;
+                            //They roll the dice and continue their regular turn
                             gameDie.rollDice();
                             System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
                         }
                     }
                 }
+                //If not in jail, regular turn continues
                 else{
-                    gameDie.rollDice();
+                    gameDie.rollDice(); //Dice is rolled
                     System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
                 }
                 if(gameDie.firstDiceValue == gameDie.secondDiceValue) {
+                    //Adds to counter if double is rolled on their turn
                     doubleCounter++;
                 }
+                //Sends player to jail immediately if 3 doubles are rolled in a row, next player's turn
                 if(doubleCounter == 3){
                     System.out.println("You have rolled 3 doubles in a row, you have gone to jail, your turn has ended.");
                     currentPlayer.currBS = JustVisiting_InJail;
                     break;
                 }
+                //Iterates and moves the player through the board according to dice roll
                 for (int i = 0; i < gameDie.totalDiceValue; i++) {
                     currentBoardLink = currentBoardLink.nextLink;
                     currentPlayer.currBS = (BoardSpace) currentBoardLink.data;
+                    //If player passes GO, they collect 200 dollars
                     if (currentPlayer.currBS.equals(GO)) {
                         System.out.println("You have passed GO. You have collected 200 dollars");
                         currentPlayer.balance += 200;
@@ -333,14 +349,20 @@ public class Main {
                 currentPosition = currentPlayer.currBS;
                 System.out.println("You have landed on " + currentPlayer.currBS.name);
                 printBoard(topRow, leftCol, rightCol, botRow, pl);
+                //If boardSpace landed on is a regular property (excluding railroads and utility)
                 if (currentPosition.buildType == 1) {
+                    //If property landed on does not have an owner
                     if(currentPosition.owner == null) {
+                        //If player can not afford the property
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
+                            //Scans input on whether the player wishes to buy the property
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
                             String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
+                                //Sets owner of boardSpace to currentPlayer and adds the boardSpace to the Arraylist of the player's properties
+                                //Subtracts property cost from player's balance
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
@@ -350,25 +372,32 @@ public class Main {
                         }
                     }
                     else{
+                        //If player needs to pay rent and does not have enough money, they lose
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
                             players.deleteLink(currentPlayer);
                             break;
                         }
+                        //Subtract rent cost based on upgrades from player's balance and adds to owner of boardspace
                         else {
                             currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
                             currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
                             System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
-                } else if (currentPosition.buildType == 2){
+                } else if (currentPosition.buildType == 2){ //If boardSpace is a railroad
+                    //If railroad does not have an owner
                     if(currentPosition.owner == null) {
+                        //If player does not have enough money to purchase the property
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
+                            //Scans whether the player wishes to buy the property
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
                             String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
+                                //Sets owner of boardSpace to currentPlayer and adds the boardSpace to the Arraylist of the player's properties
+                                //Subtracts property cost from player's balance
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
@@ -378,31 +407,40 @@ public class Main {
                         }
                     }
                     else{
+                        //If boardSpace has an owner and player does not have enough money to pay rent
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
+                            //Player is deleted from game
                             System.out.println("You do not have enough money you lose");
                             players.deleteLink(currentPlayer);
                             break;
                         }
                         else {
+                            //calculates the amount of railroads the owner of the railroad has
                             int amountOfProperties = -1;
                             for(int i = 0; i < currentPosition.owner.properties.size(); i++){
                                 if(currentPosition.owner.properties.get(i).buildType == 2){
                                     amountOfProperties++;
                                 }
                             }
+                            //Deducts rent from currentPlayer and adds to owner's balance
                             currentPlayer.balance -= currentPosition.rentCost[amountOfProperties];
                             currentPosition.owner.balance += currentPosition.rentCost[amountOfProperties];
                             System.out.println("You have payed a rent amount of " + currentPosition.rentCost[amountOfProperties] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
-                }else if (currentPosition.buildType == 3){
+                }else if (currentPosition.buildType == 3){ //If boardSpace is utility space
+                    //If current property does not have an owner
                     if(currentPosition.owner == null) {
+                        //If player can not afford to pay purchase cost
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
+                            //Scans decision to buy property
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
                             String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
+                                //Sets owner of boardSpace to currentPlayer and adds the boardSpace to the Arraylist of the player's properties
+                                //Subtracts property cost from player's balance
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
@@ -412,63 +450,78 @@ public class Main {
                         }
                     }
                     else{
+                        //If this property has an owner and currentPlayer can not pay rent
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
                             players.deleteLink(currentPlayer);
                             break;
                         }
                         else {
+                            //Calculates rent cost based on number of properties
                             int amountOfProperties = -1;
                             for(int i = 0; i < currentPosition.owner.properties.size(); i++){
                                 if(currentPosition.owner.properties.get(i).buildType == 2){
                                     amountOfProperties++;
                                 }
                             }
+                            //Deducts rent cost from currentPlayer's balance and adds to owner of property's balance
                             currentPlayer.balance -= currentPosition.rentCost[amountOfProperties];
                             currentPosition.owner.balance += currentPosition.rentCost[amountOfProperties];
                             System.out.println("You have payed a rent amount of " + currentPosition.rentCost[amountOfProperties] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
-                }else if (currentPosition.buildType == 4){
+                }else if (currentPosition.buildType == 4){ //If landed on go to jail space
+                    //Player goes to jail, sets inJail to true, and turn moves onto the next player
                     System.out.println("You are going to jail");
                     currentPlayer.currBS = JustVisiting_InJail;
                     currentPlayer.inJail = true;
                     break;
-                }else if (currentPosition.buildType == 5){
+                }else if (currentPosition.buildType == 5){ //If landed on free parking, nothing happens
                     System.out.println("Congrats you get to park for free!");
-                }else if (currentPosition.buildType == 6){
+                }else if (currentPosition.buildType == 6){ //If landed on visiting jail boardSpace
                     System.out.println("You are just visiting jail so nothing to worry about");
-                }else if (currentPosition.buildType == 7){
-                    if(currentPlayer.balance < 200){
+                }else if (currentPosition.buildType == 7){ //If landed on income tax or luxury tax
+                    //If can not afford tax
+                    if(currentPlayer.balance < currentPosition.rentCost[0]){
+                        //Player is deleted from list and loses game, turn moves on to next player
                         System.out.println("The taxes gottcha, you lose");
                         players.deleteLink(currentPlayer);
                         break;
                     }
                     else{
-                        System.out.println("You paid taxes of 200 dollars");
-                        currentPlayer.balance -= 200;
+                        //Pay the tax
+                        System.out.println("You paid taxes of "+currentPosition.rentCost[0]+" dollars");
+                        currentPlayer.balance -= currentPosition.rentCost[0];
                         System.out.println("Your remaining balance is " +currentPlayer.balance);
                     }
                 }
+                //Loops through if the player wishes to do any optional actions
                 while(true) {
+                    //Scans whether the player would like to commit and additional actions
                     System.out.println("Would you like your current turn to be over?");
                     String answer = scan.next().toLowerCase(Locale.ROOT);
                     if(answer.equals("yes")){
+                        //Turn moves on to next player
                         break;
                     }
+                    //Scans what the player would like to do
                     System.out.println("What would you like to do now: trade, upgrade, or sell (houses/hotels)");
                     String move = scan.next().toLowerCase(Locale.ROOT);
+                    //Player is shown the trade menu
                     if(move.equals("trade")){
                         tradeProperties(currentPlayer, listOfPlayers);
                     }
+                    //Player is shown the upgrade menu
                     else if(move.equals("upgrade")){
                         currentPlayer.upgradeProperties(colorSets);
                     }
+                    //Player is shown the sell upgrade menu
                     else if(move.equals("sell")){
                         currentPlayer.sellUpgrades(colorSets);
                     }
                 }
             }
+            //Moves turn onto next player
             currentPlayerLink = currentPlayerLink.nextLink;
         }
     }
