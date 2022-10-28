@@ -243,9 +243,9 @@ public class Main {
         // Written by Shreyes
         Scanner scan = new Scanner(System.in);
         System.out.println("How many players are playing?");
-        int n = scan.nextInt();
+        int numberOfPlayers = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
-        for (int j = n; j > 0; j--) {
+        for (int j = numberOfPlayers; j > 0; j--) {
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
             String name = scan.next();
             char icon = scan.next().charAt(0);
@@ -589,4 +589,11 @@ public class Main {
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
     }
 
+    // Written by Carson
+    public void tradeProperties(Player currentPlayer){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Hi, "+currentPlayer.name+". Enter the name of the player you wish to trade with.");
+        String tradePartnerName = sc.next().toLowerCase(Locale.ROOT);
+
+    }
 }
