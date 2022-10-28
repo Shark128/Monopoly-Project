@@ -205,6 +205,41 @@ public class Main {
         board.insertFirst(linkEmpty1);
         board.insertFirst(linkMed);
         board.insertFirst(linkGo);
+        // Written by Carson
+        BoardSpace[][] colorSets = new BoardSpace[8][3];
+
+        colorSets[0][0] = Mediterranean_Avenue;
+        colorSets[0][1] = Baltic_Avenue;
+        colorSets[0][2] = null;
+
+        colorSets[1][0] = Oriental_Avenue;
+        colorSets[1][1] = Vermont_Avenue;
+        colorSets[1][2] = Connecticut_Avenue;
+
+        colorSets[2][0] = St_Charles_Place;
+        colorSets[2][1] = States_Avenue;
+        colorSets[2][2] = Virginia_Avenue;
+
+        colorSets[3][0] = St_James_Place;
+        colorSets[3][1] = Tennessee_Avenue;
+        colorSets[3][2] = New_York_Avenue;
+
+        colorSets[4][0] = Kentucky_Avenue;
+        colorSets[4][1] = Indiana_Avenue;
+        colorSets[4][2] = Illinois_Avenue;
+
+        colorSets[5][0] = Atlantic_Avenue;
+        colorSets[5][1] = Ventinor_Avenue;
+        colorSets[5][2] = Marvin_Gardens;
+
+        colorSets[6][0] = Pacific_Avenue;
+        colorSets[6][1] = North_Carolina_Avenue;
+        colorSets[6][2] = Pennsylvania_Avenue;
+
+        colorSets[7][0] = Park_Place;
+        colorSets[7][1] = Boardwalk;
+        colorSets[7][2] = null;
+
         // Written by Shreyes
         Scanner scan = new Scanner(System.in);
         System.out.println("How many players are playing?");
