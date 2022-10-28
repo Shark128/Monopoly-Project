@@ -348,7 +348,8 @@ public class Main {
                     else{
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
-                            //Delete this player and break
+                            players.deleteLink(currentPlayer);
+                            break;
                         }
                         else {
                             currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
@@ -375,7 +376,8 @@ public class Main {
                     else{
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
-                            //Delete this player and break
+                            players.deleteLink(currentPlayer);
+                            break;
                         }
                         else {
                             currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
@@ -402,7 +404,8 @@ public class Main {
                     else{
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
-                            //Delete this player and break
+                            players.deleteLink(currentPlayer);
+                            break;
                         }
                         else {
                             currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
@@ -422,7 +425,7 @@ public class Main {
                 }else if (currentPosition.buildType == 7){
                     if(currentPlayer.balance < 200){
                         System.out.println("The taxes gottcha, you lose");
-                        //delete this player
+                        players.deleteLink(currentPlayer);
                         break;
                     }
                     else{
@@ -439,10 +442,10 @@ public class Main {
                     System.out.println("What would you like to do now: trade or upgrade");
                     String move = scan.nextLine().toLowerCase(Locale.ROOT);
                     if(move.equals("trade")){
-                        currentPlayer.upgradeProperties(colorSets);
+                        //trade
                     }
                     else if(move.equals("upgrade")){
-                        //currentPlayer.upgradeProperties();
+                        currentPlayer.upgradeProperties(colorSets);
                     }
                 }
             }

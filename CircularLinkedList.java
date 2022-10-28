@@ -30,4 +30,21 @@ public class CircularLinkedList { // Written by Carson, Shreyes, and Bryan
         }
         return null;
     }
+
+    public boolean deleteLink(Player currentPlayer){
+        Link deleted = firstLink; //link we are deleting
+        Link behind = lastLink; //the link before the one being deleted
+        while(deleted != null){ //Loops through entire linked list
+            if(deleted.data.equals(currentPlayer)){ //If the link we are deleting to delete is found
+                behind.nextLink = deleted.nextLink; //Replaces the deleted link with the link behind it
+                return true;
+            }
+            else{
+                behind = deleted; //Makes sure the replacement link will always be behind the link being deleted
+                deleted = deleted.nextLink;
+            }
+        }
+        return false; //If deletion was unsuccessful
+    }
+
 }
