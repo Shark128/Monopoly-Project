@@ -96,8 +96,8 @@ public class Main {
         leftCol[1] = New_York_Avenue;
         Link<BoardSpace> linkNew = new Link<BoardSpace>(New_York_Avenue);
         BoardSpace FreeParking = new BoardSpace("Free Parking", 0, new int[]{}, 0, 5);
-       leftCol[0] = FreeParking;
-       topRow[0] = FreeParking;
+        leftCol[0] = FreeParking;
+        topRow[0] = FreeParking;
         Link<BoardSpace> linkFre = new Link<BoardSpace>(FreeParking);
         // Written by Shreyes
         BoardSpace Kentucky_Avenue = new BoardSpace("Kentucky Avenue", 220, new int[]{18, 90, 250, 700, 875, 1050},
@@ -133,8 +133,8 @@ public class Main {
         topRow[9] = Marvin_Gardens;
         Link<BoardSpace> linkMar = new Link<BoardSpace>(Marvin_Gardens);
         BoardSpace Go_To_Jail = new BoardSpace("Go To Jail", 0, new int[]{}, 0, 4);
-       topRow[10] = Go_To_Jail;
-       rightCol[0] = Go_To_Jail;
+        topRow[10] = Go_To_Jail;
+        rightCol[0] = Go_To_Jail;
         Link<BoardSpace> linkGot = new Link<BoardSpace>(Go_To_Jail);
         // Written by Bryan
         BoardSpace Pacific_Avenue = new BoardSpace("Pacific Avenue", 300, new int[]{26, 130, 390, 900, 1100, 1275},
