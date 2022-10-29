@@ -246,7 +246,6 @@ public class Main {
         System.out.println("How many players are playing?");
         int numberOfPlayers = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
-        ArrayList<Player> pl = new ArrayList<Player>();
         ArrayList<Player> listOfPlayers = new ArrayList<Player>();
         for (int j = numberOfPlayers; j > 0; j--) {
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
@@ -332,7 +331,7 @@ public class Main {
                 }
                 currentPosition = currentPlayer.currBS;
                 System.out.println("You have landed on " + currentPlayer.currBS.name);
-                printBoard(topRow, leftCol, rightCol, botRow, pl);
+                printBoard(topRow, leftCol, rightCol, botRow, listOfPlayers);
                 if (currentPosition.buildType == 1) {
                     if(currentPosition.owner == null) {
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
@@ -531,16 +530,16 @@ public class Main {
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.print("                    ");
+
         for (int i = 0; i<11; i++) {
             for (int j = 0; j<topRow[i].occupier.size(); j++) {
-                if (topRow[i].occupier.get(j)) {
-                    System.out.print(players.get(j).icon + "                    ");
+                if (j< players.size() && topRow[i].occupier.get(j)) {
+                    System.out.print(players.get(j).icon + " ");
                 }
-                else {
-                    System.out.print("                     ");
-                }
-            } // fix this
+            }
+            System.out.print("                            ");
         }
+        System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
         // top row done
@@ -600,6 +599,18 @@ public class Main {
             }
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
+            System.out.print("                    ");
+            for (int j = 0; j<leftCol[i].occupier.size(); j++) {
+                if (j< players.size() && leftCol[i].occupier.get(j)) {
+                    System.out.print(players.get(j).icon + " ");
+                }
+            }
+            System.out.print(spacing.repeat(260));
+            for (int j = 0; j<rightCol[i].occupier.size(); j++) {
+                if (j< players.size() && rightCol[i].occupier.get(j)) {
+                    System.out.print(players.get(j).icon + " ");
+                }
+            }
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("┗----------------------------------┛                                                                                                                                                                                                                                 ┗----------------------------------┛");
@@ -640,6 +651,17 @@ public class Main {
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
+        System.out.print("                    ");
+
+        for (int i = 9; i>=0; i--) {
+            for (int j = 0; j<botRow[i].occupier.size(); j++) {
+                if (j< players.size() && botRow[i].occupier.get(j)) {
+                    System.out.print(players.get(j).icon + " ");
+                }
+            }
+            System.out.print("                            ");
+        }
+        System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
     }

@@ -16,8 +16,10 @@ public class BoardSpace { // Carson and Shreyes
         this.purchasePrice = purchasePrice;
         this.rentCost = rentCost;
         owner = null;
-        occupier = new ArrayList<Boolean>(6);
-        Collections.fill(occupier, false);
+        occupier = new ArrayList<Boolean>();
+        for (int j = 0; j<6; j++) {
+            occupier.add(false);
+        }
         this.color = color;
         this.buildType = buildType;
         upgrades = 0;
