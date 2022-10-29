@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class Player { // Carson and Shreyes
     public String name;
+    public int number;
     public int balance;
     public ArrayList<BoardSpace> properties;
     public char icon;
@@ -11,8 +12,9 @@ public class Player { // Carson and Shreyes
     public BoardSpace currBS;
     public int jailCounter;
 
-    public Player(String name, char icon) {
+    public Player(String name, char icon, int number) {
         this.name = name;
+        this.number = number;
         balance = 1500;
         properties = new ArrayList<BoardSpace>();
         this.icon = icon;
