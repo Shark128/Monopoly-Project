@@ -9,6 +9,7 @@ public class Player { // Carson and Shreyes
     public boolean inJail;
     public boolean dead;
     public BoardSpace currBS;
+    public int jailCounter;
 
     public Player(String name, char icon) {
         this.name = name;
@@ -18,6 +19,7 @@ public class Player { // Carson and Shreyes
         inJail = false;
         dead = false;
         currBS = null;
+        jailCounter = 0;
     }
 
     // Written by Carson
@@ -64,7 +66,7 @@ public class Player { // Carson and Shreyes
             }
             else{
                 System.out.println("You don't own any full sets, or your properties are not eligible for upgrades. Sorry!");
-                break;
+                return;
             }
             for (int j = 0; j < properties.size(); j++) {
                 if (brownCounter == 3 && properties.get(j).color == 1) { // Player must own all properties in a color set for it to be upgraded.
@@ -176,11 +178,22 @@ public class Player { // Carson and Shreyes
     // Written by Carson
     public void sellUpgrades(BoardSpace[][] colorSets) {
         Scanner sc = new Scanner(System.in);
+        if(properties.size() == 0){//Returns if no properties are avaliable to sell upgrades on
+            System.out.println("You have no available properties to sell upgrades on.");
+            return;
+        }
+        //Loops and prints out properties of currentPlayer
         System.out.println("These are the properties you have upgrades on, enter the number of the property you wish to sell upgrades on.");
+        int counter = 0;
         for (int i = 0; i < properties.size(); i++) {
             if (properties.get(i).upgrades > 0) {
                 System.out.println(i + ": " + properties.get(i).name);
+                counter++;
             }
+        }
+        //no upgraded properties, return
+        if(counter == 0){
+            return;
         }
         int response = sc.nextInt();
         for (int j = 0; j < properties.size(); j++) {

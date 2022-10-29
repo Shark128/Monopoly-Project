@@ -9,26 +9,37 @@ public class Main {
         BoardSpace[] leftCol = new BoardSpace[11];
         BoardSpace[] rightCol = new BoardSpace[11];
         BoardSpace[] botRow = new BoardSpace[11];
-        BoardSpace Empty = new BoardSpace("Blank Space", 0, new int[]{},
-                0, 8); // Blank spaces take the spots of Chance/Community chest spots.
-        topRow[2] = Empty;
-        leftCol[3] = Empty;
-        rightCol[3] = Empty;
-        rightCol[6] = Empty;
-        botRow[2] = Empty;
-        botRow[7] = Empty;
-        Link<BoardSpace> linkEmpty1 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty2 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty3 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty4 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty5 = new Link<BoardSpace>(Empty);
-        Link<BoardSpace> linkEmpty6 = new Link<BoardSpace>(Empty);
+        BoardSpace Empty1 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);// Blank spaces take the spots of Chance/Community chest spots.
+        BoardSpace Empty2 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty3 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty4 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty5 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        BoardSpace Empty6 = new BoardSpace("Blank Space", 0, new int[]{},
+                0, 8);
+        topRow[2] = Empty4;
+        leftCol[3] = Empty3;
+        rightCol[3] = Empty5;
+        rightCol[6] = Empty6;
+        botRow[2] = Empty1;
+        botRow[7] = Empty2;
+        Link<BoardSpace> linkEmpty1 = new Link<BoardSpace>(Empty1);
+        Link<BoardSpace> linkEmpty2 = new Link<BoardSpace>(Empty2);
+        Link<BoardSpace> linkEmpty3 = new Link<BoardSpace>(Empty3);
+        Link<BoardSpace> linkEmpty4 = new Link<BoardSpace>(Empty4);
+        Link<BoardSpace> linkEmpty5 = new Link<BoardSpace>(Empty5);
+        Link<BoardSpace> linkEmpty6 = new Link<BoardSpace>(Empty6);
 
         BoardSpace GO = new BoardSpace("Go", 0, new int[]{0, 0, 0, 0, 0, 0},
                 0, 0);
         Collections.fill(GO.occupier, true);
         botRow[0] = GO;
         rightCol[10] = GO;
+        //Creation of all Boardspaces
         Link<BoardSpace> linkGo = new Link<BoardSpace>(GO);
         BoardSpace Mediterranean_Avenue = new BoardSpace("Mediterranean Avenue", 60, new int[]{2, 10, 30, 90, 160, 250},
                 1, 1);
@@ -246,8 +257,9 @@ public class Main {
         System.out.println("How many players are playing?");
         int numberOfPlayers = scan.nextInt();
         CircularLinkedList players = new CircularLinkedList();
+        ArrayList<Player> pl = new ArrayList<Player>();
         ArrayList<Player> listOfPlayers = new ArrayList<Player>();
-        for (int j = numberOfPlayers; j > 0; j--) {
+        for (int j = numberOfPlayers; j > 0; j--) { //Scans and enters all players' name and piece symbol
             System.out.println("Player " + j + ", enter your name and a character to symbolize your piece.");
             String name = scan.next();
             char icon = scan.next().charAt(0);
@@ -259,71 +271,93 @@ public class Main {
         }
 
         //Written by Bryan
+        //Creates link for first player
         Link currentPlayerLink = players.firstLink;
-        while (!isGameOver(players)) {
+        while (!isGameOver(players)) { //While for until game is over (until 1 player left)
             Player currentPlayer = (Player) currentPlayerLink.data;
-            int doubleCounter = 0;
+            int doubleCounter = 0; //Counter for number of times player has gone in a row
+            //resets die values
             gameDie.firstDiceValue = 0;
             gameDie.secondDiceValue = 0;
+            //While loop for the player if they roll doubles
             while(gameDie.firstDiceValue == gameDie.secondDiceValue) {
+                //If player has stayed in jail for 3 turns
+                if(currentPlayer.jailCounter == 3){
+                    System.out.println("You have stayed in jail long enough, you are free to go.");
+                    currentPlayer.inJail = false;
+                }
                 Link currentBoardLink = board.find(currentPlayer.currBS);
                 BoardSpace currentPosition = currentPlayer.currBS;
-                System.out.println(currentPlayer.name + ", it is your turn now. Your current balance is" +currentPlayer.balance);
-                if(currentPlayer.inJail){
+                System.out.println(currentPlayer.name + ", it is your turn now. Your current balance is " +currentPlayer.balance);
+                if(currentPlayer.inJail){ //Checks if currentPlayer is in jail
                     System.out.print("You are currently in jail and have two options to leave: roll for a double or pay 50 dollars");
                     System.out.println("What would you like to do? (roll or pay)");
-                    if(currentPlayer.balance < 50) {
+                    if(currentPlayer.balance < 50) { //If they can't afford to pay to leave jail they have to roll
                         System.out.println("You can't afford paying the fee so you have to roll the die");
                         gameDie.rollDice();
                         System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
+                        //If dice roll if a double, then they get out of jail, moving according to the roll
                         if (gameDie.firstDiceValue == gameDie.secondDiceValue){
                             System.out.println("You got out of jail!");
                             currentPlayer.inJail = false;
                         }
                         else{
+                            //If dice wasn't a double, they continue to stay in jail, moves to next player's turn
                             System.out.println("You failed to get out.");
+                            currentPlayer.jailCounter++;
                             break;
                         }
                     }
                     else{
                         String input = scan.next().toLowerCase(Locale.ROOT);
+                        //If they want to roll
                         if(input.equals("roll")){
                             gameDie.rollDice();
                             System.out.println("You rolled a "+gameDie.firstDiceValue+" and a "+gameDie.secondDiceValue);
+                            //If they roll a double, they leave jail and move according to the roll
                             if (gameDie.firstDiceValue == gameDie.secondDiceValue){
                                 System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
                                 System.out.println("You got out of jail!");
                                 currentPlayer.inJail = false;
                             }
-                            else{
+                            else{ //They continue to stay in jail
                                 System.out.println("You didn't roll a double, you still have to stay");
+                                currentPlayer.jailCounter++;
                                 break;
                             }
                         }
+                        //If they choose to pay the money
                         else if(input.equals("pay")){
+                            //Removes 50 from their balance and they are no longer in jail
                             System.out.println("You have paid 50 dollars to leave jail");
                             currentPlayer.balance -= 50;
                             currentPlayer.inJail = false;
+                            //They roll the dice and continue their regular turn
                             gameDie.rollDice();
                             System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
                         }
                     }
                 }
+                //If not in jail, regular turn continues
                 else{
-                    gameDie.rollDice();
+                    gameDie.rollDice(); //Dice is rolled
                     System.out.println("You rolled a " + gameDie.firstDiceValue + " and a " + gameDie.secondDiceValue + ", totaling " + gameDie.totalDiceValue);
                 }
                 if(gameDie.firstDiceValue == gameDie.secondDiceValue) {
+                    //Adds to counter if double is rolled on their turn
                     doubleCounter++;
                 }
+                //Sends player to jail immediately if 3 doubles are rolled in a row, next player's turn
                 if(doubleCounter == 3){
                     System.out.println("You have rolled 3 doubles in a row, you have gone to jail, your turn has ended.");
                     currentPlayer.currBS = JustVisiting_InJail;
                     break;
                 }
+                //Iterates and moves the player through the board according to dice roll
                 for (int i = 0; i < gameDie.totalDiceValue; i++) {
                     currentBoardLink = currentBoardLink.nextLink;
                     currentPlayer.currBS = (BoardSpace) currentBoardLink.data;
+                    //If player passes GO, they collect 200 dollars
                     if (currentPlayer.currBS.equals(GO)) {
                         System.out.println("You have passed GO. You have collected 200 dollars");
                         currentPlayer.balance += 200;
@@ -331,15 +365,21 @@ public class Main {
                 }
                 currentPosition = currentPlayer.currBS;
                 System.out.println("You have landed on " + currentPlayer.currBS.name);
-                printBoard(topRow, leftCol, rightCol, botRow, listOfPlayers);
+                printBoard(topRow, leftCol, rightCol, botRow, pl);
+                //If boardSpace landed on is a regular property (excluding railroads and utility)
                 if (currentPosition.buildType == 1) {
+                    //If property landed on does not have an owner
                     if(currentPosition.owner == null) {
+                        //If player can not afford the property
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
+                            //Scans input on whether the player wishes to buy the property
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
                             String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
+                                //Sets owner of boardSpace to currentPlayer and adds the boardSpace to the Arraylist of the player's properties
+                                //Subtracts property cost from player's balance
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
@@ -349,25 +389,32 @@ public class Main {
                         }
                     }
                     else{
+                        //If player needs to pay rent and does not have enough money, they lose
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
                             players.deleteLink(currentPlayer);
                             break;
                         }
+                        //Subtract rent cost based on upgrades from player's balance and adds to owner of boardspace
                         else {
                             currentPlayer.balance -= currentPosition.rentCost[currentPosition.upgrades];
                             currentPosition.owner.balance += currentPosition.rentCost[currentPosition.upgrades];
                             System.out.println("You have payed a rent amount of " + currentPosition.rentCost[currentPosition.upgrades] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
-                } else if (currentPosition.buildType == 2){
+                } else if (currentPosition.buildType == 2){ //If boardSpace is a railroad
+                    //If railroad does not have an owner
                     if(currentPosition.owner == null) {
+                        //If player does not have enough money to purchase the property
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
+                            //Scans whether the player wishes to buy the property
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
                             String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
+                                //Sets owner of boardSpace to currentPlayer and adds the boardSpace to the Arraylist of the player's properties
+                                //Subtracts property cost from player's balance
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
@@ -377,31 +424,40 @@ public class Main {
                         }
                     }
                     else{
+                        //If boardSpace has an owner and player does not have enough money to pay rent
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
+                            //Player is deleted from game
                             System.out.println("You do not have enough money you lose");
                             players.deleteLink(currentPlayer);
                             break;
                         }
                         else {
+                            //calculates the amount of railroads the owner of the railroad has
                             int amountOfProperties = -1;
                             for(int i = 0; i < currentPosition.owner.properties.size(); i++){
                                 if(currentPosition.owner.properties.get(i).buildType == 2){
                                     amountOfProperties++;
                                 }
                             }
+                            //Deducts rent from currentPlayer and adds to owner's balance
                             currentPlayer.balance -= currentPosition.rentCost[amountOfProperties];
                             currentPosition.owner.balance += currentPosition.rentCost[amountOfProperties];
                             System.out.println("You have payed a rent amount of " + currentPosition.rentCost[amountOfProperties] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
-                }else if (currentPosition.buildType == 3){
+                }else if (currentPosition.buildType == 3){ //If boardSpace is utility space
+                    //If current property does not have an owner
                     if(currentPosition.owner == null) {
+                        //If player can not afford to pay purchase cost
                         if (currentPlayer.balance < currentPosition.purchasePrice) {
                             System.out.println("You don't have enough money to buy this property.");
                         } else {
+                            //Scans decision to buy property
                             System.out.println("Would you like to buy " + currentPosition.name + "?");
                             String decision = scan.next().toLowerCase(Locale.ROOT);
                             if (decision.equals("yes")) {
+                                //Sets owner of boardSpace to currentPlayer and adds the boardSpace to the Arraylist of the player's properties
+                                //Subtracts property cost from player's balance
                                 currentPlayer.balance = currentPlayer.balance - currentPosition.purchasePrice;
                                 currentPosition.owner = currentPlayer;
                                 currentPlayer.properties.add(currentPosition);
@@ -411,63 +467,76 @@ public class Main {
                         }
                     }
                     else{
+                        //If this property has an owner and currentPlayer can not pay rent
                         if(currentPlayer.balance < currentPosition.rentCost[currentPosition.upgrades]) {
                             System.out.println("You do not have enough money you lose");
                             players.deleteLink(currentPlayer);
                             break;
                         }
                         else {
+                            //Calculates rent cost based on number of properties
                             int amountOfProperties = -1;
                             for(int i = 0; i < currentPosition.owner.properties.size(); i++){
                                 if(currentPosition.owner.properties.get(i).buildType == 2){
                                     amountOfProperties++;
                                 }
                             }
+                            //Deducts rent cost from currentPlayer's balance and adds to owner of property's balance
                             currentPlayer.balance -= currentPosition.rentCost[amountOfProperties];
                             currentPosition.owner.balance += currentPosition.rentCost[amountOfProperties];
                             System.out.println("You have payed a rent amount of " + currentPosition.rentCost[amountOfProperties] + " with a remaining balance of " + currentPlayer.balance);
                         }
                     }
-                }else if (currentPosition.buildType == 4){
+                }else if (currentPosition.buildType == 4){ //If landed on go to jail space
+                    //Player goes to jail, sets inJail to true, and turn moves onto the next player
                     System.out.println("You are going to jail");
                     currentPlayer.currBS = JustVisiting_InJail;
                     currentPlayer.inJail = true;
                     break;
-                }else if (currentPosition.buildType == 5){
+                }else if (currentPosition.buildType == 5){ //If landed on free parking, nothing happens
                     System.out.println("Congrats you get to park for free!");
-                }else if (currentPosition.buildType == 6){
+                }else if (currentPosition.buildType == 6){ //If landed on visiting jail boardSpace
                     System.out.println("You are just visiting jail so nothing to worry about");
-                }else if (currentPosition.buildType == 7){
-                    if(currentPlayer.balance < 200){
+                }else if (currentPosition.buildType == 7){ //If landed on income tax or luxury tax
+                    //If can not afford tax
+                    if(currentPlayer.balance < currentPosition.rentCost[0]){
+                        //Player is deleted from list and loses game, turn moves on to next player
                         System.out.println("The taxes gottcha, you lose");
                         players.deleteLink(currentPlayer);
                         break;
                     }
                     else{
-                        System.out.println("You paid taxes of 200 dollars");
-                        currentPlayer.balance -= 200;
+                        //Pay the tax
+                        System.out.println("You paid taxes of "+currentPosition.rentCost[0]+" dollars");
+                        currentPlayer.balance -= currentPosition.rentCost[0];
                         System.out.println("Your remaining balance is " +currentPlayer.balance);
                     }
                 }
+                //Loops through if the player wishes to do any optional actions
                 while(true) {
+                    //Scans whether the player would like to commit and additional actions
                     System.out.println("Would you like your current turn to be over?");
                     String answer = scan.next().toLowerCase(Locale.ROOT);
                     if(answer.equals("yes")){
+                        //Turn moves on to next player
                         break;
                     }
+                    //Scans what the player would like to do
                     System.out.println("What would you like to do now: trade, upgrade, or sell (houses/hotels)");
                     String move = scan.next().toLowerCase(Locale.ROOT);
-                    if(move.equals("trade")){
-                        tradeProperties(currentPlayer, listOfPlayers);
-                    }
-                    else if(move.equals("upgrade")){
-                        currentPlayer.upgradeProperties(colorSets);
-                    }
-                    else if(move.equals("sell")){
-                        currentPlayer.sellUpgrades(colorSets);
+                    //Player is shown the trade menu
+                    switch (move) {
+                        case "trade" -> tradeProperties(currentPlayer, listOfPlayers);
+
+                        //Player is shown the upgrade menu
+                        case "upgrade" -> currentPlayer.upgradeProperties(colorSets);
+
+                        //Player is shown the sell upgrade menu
+                        case "sell" -> currentPlayer.sellUpgrades(colorSets);
                     }
                 }
             }
+            //Moves turn onto next player
             currentPlayerLink = currentPlayerLink.nextLink;
         }
     }
@@ -530,16 +599,16 @@ public class Main {
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.print("                    ");
-
         for (int i = 0; i<11; i++) {
             for (int j = 0; j<topRow[i].occupier.size(); j++) {
-                if (j< players.size() && topRow[i].occupier.get(j)) {
-                    System.out.print(players.get(j).icon + " ");
+                if (topRow[i].occupier.get(j)) {
+                    System.out.print(players.get(j).icon + "                    ");
                 }
-            }
-            System.out.print("                            ");
+                else {
+                    System.out.print("                     ");
+                }
+            } // fix this
         }
-        System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
         // top row done
@@ -599,18 +668,6 @@ public class Main {
             }
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
-            System.out.print("                    ");
-            for (int j = 0; j<leftCol[i].occupier.size(); j++) {
-                if (j< players.size() && leftCol[i].occupier.get(j)) {
-                    System.out.print(players.get(j).icon + " ");
-                }
-            }
-            System.out.print(spacing.repeat(260));
-            for (int j = 0; j<rightCol[i].occupier.size(); j++) {
-                if (j< players.size() && rightCol[i].occupier.get(j)) {
-                    System.out.print(players.get(j).icon + " ");
-                }
-            }
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("|                                  |                                                                                                                                                                                                                                 |                                  |");
             System.out.println("┗----------------------------------┛                                                                                                                                                                                                                                 ┗----------------------------------┛");
@@ -651,17 +708,6 @@ public class Main {
         System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
-        System.out.print("                    ");
-
-        for (int i = 9; i>=0; i--) {
-            for (int j = 0; j<botRow[i].occupier.size(); j++) {
-                if (j< players.size() && botRow[i].occupier.get(j)) {
-                    System.out.print(players.get(j).icon + " ");
-                }
-            }
-            System.out.print("                            ");
-        }
-        System.out.println();
         System.out.println("|                                  ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                       ||                                  |");
         System.out.println("┗----------------------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗-----------------------┛┗----------------------------------┛");
     }
@@ -677,43 +723,45 @@ public class Main {
                 Player tradePartner = listOfPlayers.get(i);
                 System.out.println("Here are "+currentPlayer.name+"'s properties: "); // Displays all properties so users are aware what they can trade for.
                 for (int j = 0; j < currentPlayer.properties.size(); j++){
-                    System.out.println(i+": "+currentPlayer.properties.get(j).name);
+                    System.out.println(j+": "+currentPlayer.properties.get(j).name);
                 }
                 System.out.println("Here are "+tradePartner.name+"'s properties: ");
                 for (int k = 0; k < tradePartner.properties.size(); k++){
-                    System.out.println(i+": "+tradePartner.properties.get(k).name);
+                    System.out.println(k+": "+tradePartner.properties.get(k).name);
                 }
 
-                System.out.println(currentPlayer.name+"enter the number (shown above) of the property you want to trade AWAY: ");
+                System.out.println(currentPlayer.name+" enter the number (shown above) of the property you want to trade AWAY: ");
                 int p1PropertyToTrade = sc.nextInt(); // Locates property user wishes to trade away.
                 ArrayList<Integer> p1IndexOfPropertiesToTrade = new ArrayList<Integer>();
                 p1IndexOfPropertiesToTrade.add(p1PropertyToTrade);
 
-                String response = "yes";
+                System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
+                String response = sc.next().toLowerCase(Locale.ROOT);
                 while(response.equals("yes")){
-                    System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
-                    response = sc.next().toLowerCase(Locale.ROOT);
-                    System.out.println(currentPlayer.name+"enter the number (shown above) of the property you want to trade AWAY: ");
+                    System.out.println(currentPlayer.name+" enter the number (shown above) of the property you want to trade AWAY: ");
                     int p1NewPropertyToTrade = sc.nextInt();
                     p1IndexOfPropertiesToTrade.add(p1NewPropertyToTrade);
+                    System.out.println("Do you want to trade more properties?"); // Allows user to trade for more than 1 property.
+                    response = sc.next().toLowerCase(Locale.ROOT);
                 }
 
-                System.out.println(currentPlayer.name+"how much cash do you want to trade? If none, enter 0: ");
+                System.out.println(currentPlayer.name+" how much cash do you want to trade? If none, enter 0: ");
                 int p1CashToTrade = sc.nextInt(); // Cash can be traded as well, but it is not required.
 
-                System.out.println(tradePartner.name+"enter the number (shown above) of the property you want to trade: ");
+                System.out.println(tradePartner.name+" enter the number (shown above) of the property you want to trade: ");
                 int p2PropertyToTrade = sc.nextInt(); // Repeats the same process for other player involved in trade.
                 ArrayList<Integer> p2IndexOfPropertiesToTrade = new ArrayList<Integer>();
                 p2IndexOfPropertiesToTrade.add(p2PropertyToTrade);
-                String p2response = "yes";
+                System.out.println("Do you want to trade more properties?");
+                String p2response = sc.next().toLowerCase(Locale.ROOT);
                 while(p2response.equals("yes")){
-                    System.out.println("Do you want to trade more properties?");
-                    p2response = sc.next().toLowerCase(Locale.ROOT);
-                    System.out.println(tradePartner.name+"enter the number (shown above) of the property you want to trade: ");
+                    System.out.println(tradePartner.name+" enter the number (shown above) of the property you want to trade: ");
                     int p2NewPropertyToTrade = sc.nextInt();
                     p2IndexOfPropertiesToTrade.add(p2NewPropertyToTrade);
+                    System.out.println("Do you want to trade more properties?");
+                    p2response = sc.next().toLowerCase(Locale.ROOT);
                 }
-                System.out.println(tradePartner.name+"how much cash do you want to trade? If none, enter 0: ");
+                System.out.println(tradePartner.name+" how much cash do you want to trade? If none, enter 0: ");
                 int p2CashToTrade = sc.nextInt();
 
                 // Informs users of what exactly is being traded.
@@ -765,7 +813,7 @@ public class Main {
                 }
                 else{
                     System.out.println("The trade was not agreed upon. Sorry.");
-                    break; // If the trade is not agreed upon, the process ends.
+                    return; // If the trade is not agreed upon, the process ends.
                 }
             }
         }
